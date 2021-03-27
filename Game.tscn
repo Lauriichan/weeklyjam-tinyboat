@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://images/boats/Tinyboat-002.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player/LocalPlayer.gd" type="Script" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://images/ui/Healthbar-Block3.png" type="Texture" id=10]
 [ext_resource path="res://scripts/GameHandler.gd" type="Script" id=11]
 [ext_resource path="res://images/ui/Healthbar-bar-block.png" type="Texture" id=12]
+[ext_resource path="res://images/ui/Speedometer-on.png" type="Texture" id=13]
+[ext_resource path="res://images/ui/Speedometer.png" type="Texture" id=14]
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 11 )
@@ -52,7 +54,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureBar" type="Control" parent="Control"]
+[node name="Healthbar" type="Control" parent="Control"]
 anchor_top = -0.0297302
 anchor_bottom = -0.0297302
 margin_left = 500.24
@@ -71,10 +73,31 @@ start_block_texture = ExtResource( 8 )
 end_block_texture = ExtResource( 10 )
 offset_block_texture = ExtResource( 12 )
 max_value = 10
+value = 10
 block_stretch = 6.04
 block_offset_x = 42.27
 block_offset_y = 6.03
 block_row_offset = 6.03
+
+[node name="Speedbar" type="Control" parent="Control"]
+margin_left = 475.803
+margin_top = -437.862
+margin_right = 548.803
+margin_bottom = -412.592
+rect_min_size = Vector2( 26, 0 )
+rect_rotation = 180.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+bar_texture = ExtResource( 14 )
+block_texture = ExtResource( 13 )
+max_value = 3
+value = 1
+block_stretch = 0.281
+block_offset_x = 5.61
+block_offset_y = 2.8
+block_row_offset = 5.61
 
 [node name="Settings" type="Node" parent="."]
 script = ExtResource( 4 )

@@ -1,11 +1,16 @@
 class_name Movement
 
+var speedbar : TextureBar;
+
 var player : KinematicBody2D;
 var speed_level : int = 2;
 var max_level : int = 3;
 
 func set_player(var _player : KinematicBody2D):
 	self.player = _player;
+	if _player != null:
+		speedbar = player.get_node("/root/Scene/Control/Speedbar");
+		speedbar.value = 3 - speed_level;
 	
 func _update(var _delta : float):
 	update_position();
@@ -16,9 +21,13 @@ func update_speed_level():
 	if Input.is_action_just_pressed("game_level_up"):
 		if speed_level != max_level:
 			speed_level += 1;
+			if speedbar != null:
+				speedbar.value = 3 - speed_level;
 	if Input.is_action_just_pressed("game_level_down"):
 		if speed_level != 1:
 			speed_level -= 1;
+			if speedbar != null:
+				speedbar.value = 3 - speed_level;
 
 func update_position():
 	var velocity = 0;

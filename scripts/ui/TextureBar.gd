@@ -8,8 +8,8 @@ export var start_block_texture : Texture setget set_start_texture;
 export var end_block_texture : Texture setget set_end_texture;
 export var offset_block_texture : Texture setget set_offset_texture;
 
-export var value : int setget set_value;
 export var max_value : int setget set_max_value;
+export var value : int = max_value setget set_value;
 
 export var block_stretch : float = 1 setget set_stretch;
 export var block_offset_x : float = 1 setget set_offset_x;
