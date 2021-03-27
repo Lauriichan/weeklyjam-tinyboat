@@ -33,8 +33,30 @@ func update_position():
 	player.transform.origin.y += velocity;
 
 func update_rotation():
+	if player.settings.use_controller:
+		update_rotation_controller();
+	else:
+		update_rotation_mouse();
+
+func update_rotation_controller():
+	var x = 0;
+	var y = 0;
+	if Input.is_action_pressed("game_rotate_x+"):
+		x += Input.get_action_strength("game_rotate_x+");
+	if Input.is_action_pressed("game_rotate_y+"):
+		y -= Input.get_action_strength("game_rotate_y+");
+	if Input.is_action_pressed("game_rotate_x-"):
+		x -= Input.get_action_strength("game_rotate_x-");
+	if Input.is_action_pressed("game_rotate_y-"):
+		y += Input.get_action_strength("game_rotate_y-");
+	if x != 0 || y != 0:
+		update_rotation_for(atan2(x, y));
+	
+func update_rotation_mouse():
 	var position = player.get_global_mouse_position();
-	var rotation = atan2(position.x, position.y - player.transform.origin.y);
+	update_rotation_for(atan2(position.x, position.y - player.transform.origin.y));
+
+func update_rotation_for(var rotation : float):
 	if rotation < 0:
 		rotation = abs(rotation);
 	else:

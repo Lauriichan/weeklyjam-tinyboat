@@ -12,7 +12,7 @@ func _ready():
 		components[i].set_player(self);
 	
 
-func _process(var _delta : float):
+func _physics_process(var _delta : float):
 	if components.size() == 0:
 		return;
 	for component in components:

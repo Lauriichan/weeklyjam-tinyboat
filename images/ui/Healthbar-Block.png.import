@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Tinyboat-002.png-b118dff72a01fbde4b9ada48433b2df4.stex"
+path="res://.import/Healthbar-Block.png-847a515c764c8729ab5f02f4b5de7572.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/boats/Tinyboat-002.png"
-dest_files=[ "res://.import/Tinyboat-002.png-b118dff72a01fbde4b9ada48433b2df4.stex" ]
+source_file="res://images/ui/Healthbar-Block.png"
+dest_files=[ "res://.import/Healthbar-Block.png-847a515c764c8729ab5f02f4b5de7572.stex" ]
 
 [params]
 

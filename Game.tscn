@@ -1,17 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://images/Tinyboat-002.png" type="Texture" id=1]
+[ext_resource path="res://images/boats/Tinyboat-002.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player/LocalPlayer.gd" type="Script" id=2]
 [ext_resource path="res://scripts/player/Movement.gd" type="Script" id=3]
 [ext_resource path="res://scripts/Settings.gd" type="Script" id=4]
-[ext_resource path="res://images/ship-shield.png" type="Texture" id=5]
+[ext_resource path="res://images/objects/ship-shield.png" type="Texture" id=5]
+[ext_resource path="res://scripts/ui/TextureBar.gd" type="Script" id=6]
+[ext_resource path="res://images/ui/Healthbar.png" type="Texture" id=7]
+[ext_resource path="res://images/ui/Healthbar-Block2.png" type="Texture" id=8]
+[ext_resource path="res://images/ui/Healthbar-Block.png" type="Texture" id=9]
+[ext_resource path="res://images/ui/Healthbar-Block3.png" type="Texture" id=10]
+[ext_resource path="res://scripts/GameHandler.gd" type="Script" id=11]
+[ext_resource path="res://images/ui/Healthbar-bar-block.png" type="Texture" id=12]
 
 [node name="Scene" type="Node2D"]
-
-[node name="Settings" type="Node" parent="."]
-script = ExtResource( 4 )
-rotation_speed = 2.0
-move_speed = 2.5
+script = ExtResource( 11 )
+min_size = Vector2( 640, 640 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -21,16 +25,16 @@ script = ExtResource( 2 )
 components = [ ExtResource( 3 ) ]
 
 [node name="Boat-Texture" type="Sprite" parent="Player"]
-position = Vector2( -1.25, 0 )
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 1 )
 
 [node name="Shield-Texture" type="Sprite" parent="Player"]
 position = Vector2( -0.0411422, -41.2236 )
-scale = Vector2( 0.28767, 0.28767 )
+scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 5 )
 
 [node name="Boat" type="CollisionPolygon2D" parent="Player"]
+visible = false
 polygon = PoolVector2Array( -3.84482, -39.9959, 3.67393, -40.0061, 3.67393, -37.4885, 6.22866, -37.4885, 6.24106, -35.0206, 8.75858, -35.0082, 8.77098, -32.5031, 11.2637, -32.5279, 11.2141, -24.9754, 16.2367, -25.0126, 16.2119, -22.5446, 13.682, -22.5198, 13.7316, -20.0519, 16.2491, -20.0395, 16.2367, -15.0417, 18.7294, -15.0417, 18.7542, -10.0066, 21.2346, -10.0066, 21.2346, 4.93725, 23.7397, 4.92485, 23.7645, 7.46717, 21.2222, 7.50437, 21.2594, 20.0052, 18.8163, 19.9928, 18.7542, 29.9016, 16.3235, 30.0132, 16.2615, 34.9863, 13.7688, 35.0111, 13.7316, 37.479, 8.74618, 37.5162, 8.70897, 39.9965, -8.71523, 39.9841, -8.74004, 37.4542, -13.7007, 37.479, -13.6883, 34.9615, -16.2306, 34.9491, -16.2926, 29.9636, -18.7357, 29.9636, -18.7109, 19.968, -21.216, 19.9431, -21.216, 7.46716, -23.7335, 7.47957, -23.7459, 5.03646, -21.2284, 5.02406, -21.216, -9.96945, -18.7729, -9.96945, -18.7481, -15.0169, -16.2554, -15.0045, -16.2554, -20.0147, -13.7875, -19.9775, -13.7751, -22.5198, -16.2554, -22.5198, -16.2554, -25.0126, -11.2948, -24.9754, -11.208, -32.5155, -8.78964, -32.5279, -8.78964, -34.9958, -6.27212, -35.033, -6.25972, -37.4886, -3.7546, -37.501 )
 
 [node name="Shield" type="StaticBody2D" parent="Player"]
@@ -38,4 +42,42 @@ position = Vector2( 0, -40 )
 collision_layer = 2
 
 [node name="Shield" type="CollisionPolygon2D" parent="Player/Shield"]
+visible = false
 polygon = PoolVector2Array( -19.4453, -2.51563, -19.4547, 2.68016, -9.15142, 2.68016, -9.15142, 0.0521965, 9.03577, 0.0939102, 9.03577, 2.63845, 19.3391, 2.68016, 19.3808, -2.57577, 14.2083, -2.57577, 14.2083, -5.12031, -14.3239, -5.07859, -14.3239, -2.53405 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureBar" type="Control" parent="Control"]
+anchor_top = -0.0297302
+anchor_bottom = -0.0297302
+margin_left = 500.24
+margin_top = -471.098
+margin_right = 820.24
+margin_bottom = -440.909
+rect_min_size = Vector2( 53, 0 )
+rect_rotation = 180.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+bar_texture = ExtResource( 7 )
+block_texture = ExtResource( 9 )
+start_block_texture = ExtResource( 8 )
+end_block_texture = ExtResource( 10 )
+offset_block_texture = ExtResource( 12 )
+max_value = 10
+block_stretch = 6.04
+block_offset_x = 42.27
+block_offset_y = 6.03
+block_row_offset = 6.03
+
+[node name="Settings" type="Node" parent="."]
+script = ExtResource( 4 )
+use_controller = true
+rotation_speed = 2.0
+move_speed = 1.75

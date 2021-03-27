@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ship-shield.png-bc69f97ab3d420ee3c538310446b081b.stex"
+path="res://.import/ship-shield.png-5b16d59df84f371d2b152df4373ab28e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/ship-shield.png"
-dest_files=[ "res://.import/ship-shield.png-bc69f97ab3d420ee3c538310446b081b.stex" ]
+source_file="res://images/objects/ship-shield.png"
+dest_files=[ "res://.import/ship-shield.png-5b16d59df84f371d2b152df4373ab28e.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

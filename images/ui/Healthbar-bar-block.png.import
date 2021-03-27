@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Tinyboat-002.png-b118dff72a01fbde4b9ada48433b2df4.stex"
+path="res://.import/Healthbar-bar-block.png-2e2fc97fa9435642e28576cce93df93e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/boats/Tinyboat-002.png"
-dest_files=[ "res://.import/Tinyboat-002.png-b118dff72a01fbde4b9ada48433b2df4.stex" ]
+source_file="res://images/ui/Healthbar-bar-block.png"
+dest_files=[ "res://.import/Healthbar-bar-block.png-2e2fc97fa9435642e28576cce93df93e.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

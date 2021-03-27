@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Tinyboat-002.png-b118dff72a01fbde4b9ada48433b2df4.stex"
+path="res://.import/gamejamdraw.svg-db9f3ae23b66cd474ed77c134866439a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/boats/Tinyboat-002.png"
-dest_files=[ "res://.import/Tinyboat-002.png-b118dff72a01fbde4b9ada48433b2df4.stex" ]
+source_file="res://concepts/gamejamdraw.svg"
+dest_files=[ "res://.import/gamejamdraw.svg-db9f3ae23b66cd474ed77c134866439a.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

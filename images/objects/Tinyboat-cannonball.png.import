@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Tinyboat-002.png-b118dff72a01fbde4b9ada48433b2df4.stex"
+path="res://.import/Tinyboat-cannonball.png-266cf8237a0f0aaebf63ae6a1d6bb0b5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/boats/Tinyboat-002.png"
-dest_files=[ "res://.import/Tinyboat-002.png-b118dff72a01fbde4b9ada48433b2df4.stex" ]
+source_file="res://images/objects/Tinyboat-cannonball.png"
+dest_files=[ "res://.import/Tinyboat-cannonball.png-266cf8237a0f0aaebf63ae6a1d6bb0b5.stex" ]
 
 [params]
 
