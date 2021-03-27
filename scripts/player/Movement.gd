@@ -1,9 +1,10 @@
 class_name Movement
 
 var speedbar : TextureBar;
+var fuelbar : TextureBar;
 
 var player : KinematicBody2D;
-var speed_level : int = 2;
+var speed_level : int = 2 setget set_speed_level;
 var max_level : int = 3;
 
 func set_player(var _player : KinematicBody2D):
@@ -11,15 +12,36 @@ func set_player(var _player : KinematicBody2D):
 	if _player != null:
 		speedbar = player.get_node("/root/Scene/Control/Speedbar");
 		speedbar.value = 3 - speed_level;
+		fuelbar = player.get_node("/root/Scene/Control/Fuelbar");
+		
+func set_speed_level(var level : int):
+	if level < 1 || level > max_level:
+		return;
+	speed_level = level;
+	if speedbar != null:
+		speedbar.value = 3 - speed_level;
+		speedbar.update();
 	
 func _update(var _delta : float):
 	update_position();
 	update_rotation();
 	update_speed_level();
+	update_fuel_level();
+	
+func update_fuel_level():
+	if speed_level == 1 && fuelbar.value > 0:
+		fuelbar.value -= player.settings.fuel_regen;
+	elif speed_level == 3:
+		if fuelbar.value == fuelbar.max_value:
+			set_speed_level(1);
+		else:
+			fuelbar.value += player.settings.fuel_usage;
 	
 func update_speed_level():
 	if Input.is_action_just_pressed("game_level_up"):
 		if speed_level != max_level:
+			if fuelbar.value >= 20:
+				return;
 			speed_level += 1;
 			if speedbar != null:
 				speedbar.value = 3 - speed_level;

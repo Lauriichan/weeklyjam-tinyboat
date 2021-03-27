@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://images/boats/Tinyboat-002.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player/LocalPlayer.gd" type="Script" id=2]
@@ -14,6 +14,12 @@
 [ext_resource path="res://images/ui/Healthbar-bar-block.png" type="Texture" id=12]
 [ext_resource path="res://images/ui/Speedometer-on.png" type="Texture" id=13]
 [ext_resource path="res://images/ui/Speedometer.png" type="Texture" id=14]
+[ext_resource path="res://images/ui/Fuel-liquid.png" type="Texture" id=15]
+[ext_resource path="res://images/ui/Fuelbar.png" type="Texture" id=16]
+[ext_resource path="res://scripts/ui/Handler/FuelHandler.gd" type="Script" id=17]
+[ext_resource path="res://images/ui/fuel-line-dark.png" type="Texture" id=18]
+
+[sub_resource type="TileSet" id=1]
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 11 )
@@ -47,6 +53,10 @@ collision_layer = 2
 visible = false
 polygon = PoolVector2Array( -19.4453, -2.51563, -19.4547, 2.68016, -9.15142, 2.68016, -9.15142, 0.0521965, 9.03577, 0.0939102, 9.03577, 2.63845, 19.3391, 2.68016, 19.3808, -2.57577, 14.2083, -2.57577, 14.2083, -5.12031, -14.3239, -5.07859, -14.3239, -2.53405 )
 
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+format = 1
+
 [node name="Control" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
@@ -72,8 +82,7 @@ block_texture = ExtResource( 9 )
 start_block_texture = ExtResource( 8 )
 end_block_texture = ExtResource( 10 )
 offset_block_texture = ExtResource( 12 )
-max_value = 10
-value = 10
+max_value = 10.0
 block_stretch = 6.04
 block_offset_x = 42.27
 block_offset_y = 6.03
@@ -92,15 +101,47 @@ __meta__ = {
 }
 bar_texture = ExtResource( 14 )
 block_texture = ExtResource( 13 )
-max_value = 3
-value = 1
+max_value = 3.0
 block_stretch = 0.281
 block_offset_x = 5.61
 block_offset_y = 2.8
 block_row_offset = 5.61
+max_on_start = false
+
+[node name="Fuelbar" type="Control" parent="Control"]
+anchor_top = 0.033371
+anchor_bottom = 0.033371
+margin_left = 505.427
+margin_top = 504.784
+margin_right = 562.427
+margin_bottom = 701.117
+rect_min_size = Vector2( 0.9, 0 )
+rect_rotation = 180.0
+rect_scale = Vector2( 1, 1.0155 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+bar_texture = ExtResource( 16 )
+block_texture = ExtResource( 15 )
+max_value = 29.0
+block_stretch = 6.335
+block_offset_x = 6.33
+block_offset_y = 6.33
+vertical_row = true
+max_on_start = false
+opacity = 65.0
 
 [node name="Settings" type="Node" parent="."]
 script = ExtResource( 4 )
 use_controller = true
 rotation_speed = 2.0
 move_speed = 1.75
+fuel_usage = 0.2
+fuel_regen = 0.08
+
+[node name="Handlers" type="Node" parent="."]
+
+[node name="FuelHandler" type="Node" parent="Handlers"]
+script = ExtResource( 17 )
+critical_block_texture = ExtResource( 18 )
