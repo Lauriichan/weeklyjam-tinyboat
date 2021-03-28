@@ -8,7 +8,7 @@ func ready():
 	window_size = OS.get_window_size();
 	window_position = OS.get_window_position();
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if OS.get_window_size() != window_size:
 		window_size = OS.get_window_size();
 		if window_size.x < min_size.x || window_size.y < min_size.y:

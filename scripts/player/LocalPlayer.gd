@@ -3,10 +3,10 @@ class_name LocalPlayer
 
 export var components : Array;
 
-var settings : Settings;
+var settings : PlayerSettings;
 
 func _ready():
-	settings = get_node("/root/Scene/Settings")
+	settings = get_node("/root/Scene/Settings/Player")
 	for i in range(components.size()):
 		components[i] = components[i].new();
 		components[i].set_player(self);

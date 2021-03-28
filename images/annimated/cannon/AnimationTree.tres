@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=2]
+
+[ext_resource path="res://images/annimated/cannon/Tinyboat-cannon-frame4.png" type="Texture" id=1]
+[ext_resource path="res://images/annimated/cannon/Tinyboat-cannon-frame1.png" type="Texture" id=2]
+[ext_resource path="res://images/annimated/cannon/Tinyboat-cannon-frame2.png" type="Texture" id=3]
+[ext_resource path="res://images/annimated/cannon/Tinyboat-cannon-frame3.png" type="Texture" id=4]
+
+[resource]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "Animation",
+"speed": 4.0
+} ]

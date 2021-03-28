@@ -9,6 +9,21 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Boat",
+"language": "GDScript",
+"path": "res://scripts/enemy/Boat.gd"
+}, {
+"base": "Node2D",
+"class": "Cannon",
+"language": "GDScript",
+"path": "res://scripts/enemy/Cannon.gd"
+}, {
+"base": "Node",
+"class": "EnemySettings",
+"language": "GDScript",
+"path": "res://scripts/settings/EnemySettings.gd"
+}, {
 "base": "Node",
 "class": "FuelHandler",
 "language": "GDScript",
@@ -23,6 +38,11 @@ _global_script_classes=[ {
 "class": "Movement",
 "language": "GDScript",
 "path": "res://scripts/player/Movement.gd"
+}, {
+"base": "Node",
+"class": "PlayerSettings",
+"language": "GDScript",
+"path": "res://scripts/settings/PlayerSettings.gd"
 }, {
 "base": "Node",
 "class": "Settings",
@@ -40,9 +60,13 @@ _global_script_classes=[ {
 "path": "res://scripts/WaterHandler.gd"
 } ]
 _global_script_class_icons={
+"Boat": "",
+"Cannon": "",
+"EnemySettings": "",
 "FuelHandler": "",
 "LocalPlayer": "",
 "Movement": "",
+"PlayerSettings": "",
 "Settings": "",
 "TextureBar": "",
 "WaterHandler": ""

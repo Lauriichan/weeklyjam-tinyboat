@@ -7,8 +7,9 @@ var block_texture : Texture;
 var fuelbar : TextureBar;
 
 func _ready():
+	var _ignore;
 	fuelbar = get_node("/root/Scene/Control/Fuelbar");
-	fuelbar.connect("value_changed", self, "fuel_changed");
+	_ignore = fuelbar.connect("value_changed", self, "fuel_changed");
 	block_texture = fuelbar.block_texture;
 	
 func fuel_changed(var value : float):
