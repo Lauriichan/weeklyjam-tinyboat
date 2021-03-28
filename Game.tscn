@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://images/boats/Tinyboat-002.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player/LocalPlayer.gd" type="Script" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://scripts/enemy/Cannon.gd" type="Script" id=25]
 [ext_resource path="res://scripts/settings/PlayerSettings.gd" type="Script" id=26]
 [ext_resource path="res://scripts/enemy/Boat.gd" type="Script" id=27]
+[ext_resource path="res://images/ui/background.png" type="Texture" id=28]
 
 [sub_resource type="TileSet" id=1]
 0/name = "water-001.png 0"
@@ -46,6 +47,8 @@
 
 [sub_resource type="PhysicsMaterial" id=2]
 friction = 0.0
+
+[sub_resource type="ArrayMesh" id=3]
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 11 )
@@ -119,11 +122,15 @@ block_texture = ExtResource( 9 )
 start_block_texture = ExtResource( 8 )
 end_block_texture = ExtResource( 10 )
 offset_block_texture = ExtResource( 12 )
+value = 10.0
 max_value = 10.0
 block_stretch = 6.04
 block_offset_x = 42.27
 block_offset_y = 6.03
 block_row_offset = 6.03
+vertical_row = false
+max_on_start = true
+opacity = 100.0
 
 [node name="Speedbar" type="Control" parent="Control"]
 margin_left = 417.886
@@ -138,12 +145,18 @@ __meta__ = {
 }
 bar_texture = ExtResource( 14 )
 block_texture = ExtResource( 13 )
+start_block_texture = null
+end_block_texture = null
+offset_block_texture = null
+value = 0.0
 max_value = 3.0
 block_stretch = 0.281
 block_offset_x = 5.61
 block_offset_y = 2.8
 block_row_offset = 5.61
+vertical_row = false
 max_on_start = false
+opacity = 100.0
 
 [node name="Fuelbar" type="Control" parent="Control"]
 anchor_top = 0.033371
@@ -161,10 +174,15 @@ __meta__ = {
 }
 bar_texture = ExtResource( 16 )
 block_texture = ExtResource( 15 )
+start_block_texture = null
+end_block_texture = null
+offset_block_texture = null
+value = 0.0
 max_value = 29.0
 block_stretch = 6.335
 block_offset_x = 6.33
 block_offset_y = 6.33
+block_row_offset = 0.0
 vertical_row = true
 max_on_start = false
 opacity = 65.0
@@ -173,7 +191,6 @@ opacity = 65.0
 
 [node name="Player" type="Node" parent="Settings"]
 script = ExtResource( 26 )
-use_controller = true
 rotation_speed = 2.0
 move_speed = 1.5
 fuel_usage = 0.08
@@ -192,7 +209,7 @@ critical_block_texture = ExtResource( 18 )
 [node name="Templates" type="Node" parent="."]
 
 [node name="BigBoat" type="KinematicBody2D" parent="Templates"]
-position = Vector2( -420.675, -1.97162 )
+position = Vector2( -380, 0 )
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 27 )
@@ -235,7 +252,7 @@ centered = false
 offset = Vector2( -3.5, -12.5 )
 
 [node name="SmallBoat" type="KinematicBody2D" parent="Templates"]
-position = Vector2( 335.208, 0.61377 )
+position = Vector2( 380, 0 )
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 27 )
@@ -261,3 +278,8 @@ offset = Vector2( -3.5, -12.5 )
 [node name="Collision" type="CollisionPolygon2D" parent="Templates/SmallBoat"]
 visible = false
 polygon = PoolVector2Array( -3.84482, -39.9959, 3.67393, -40.0061, 3.67393, -37.4885, 6.22866, -37.4885, 6.24106, -35.0206, 8.75858, -35.0082, 8.77098, -32.5031, 11.2637, -32.5279, 11.2141, -24.9754, 16.2367, -25.0126, 16.2119, -22.5446, 13.682, -22.5198, 13.7316, -20.0519, 16.2491, -20.0395, 16.2367, -15.0417, 18.7294, -15.0417, 18.7542, -10.0066, 21.2346, -10.0066, 21.2346, 4.93725, 23.7397, 4.92485, 23.7645, 7.46717, 21.2222, 7.50437, 21.2594, 20.0052, 18.8163, 19.9928, 18.7542, 29.9016, 16.3235, 30.0132, 16.2615, 34.9863, 13.7688, 35.0111, 13.7316, 37.479, 8.74618, 37.5162, 8.70897, 39.9965, -8.71523, 39.9841, -8.74004, 37.4542, -13.7007, 37.479, -13.6883, 34.9615, -16.2306, 34.9491, -16.2926, 29.9636, -18.7357, 29.9636, -18.7109, 19.968, -21.216, 19.9431, -21.216, 7.46716, -23.7335, 7.47957, -23.7459, 5.03646, -21.2284, 5.02406, -21.216, -9.96945, -18.7729, -9.96945, -18.7481, -15.0169, -16.2554, -15.0045, -16.2554, -20.0147, -13.7875, -19.9775, -13.7751, -22.5198, -16.2554, -22.5198, -16.2554, -25.0126, -11.2948, -24.9754, -11.208, -32.5155, -8.78964, -32.5279, -8.78964, -34.9958, -6.27212, -35.033, -6.25972, -37.4886, -3.7546, -37.501 )
+
+[node name="BackgroundMesh" type="MeshInstance2D" parent="."]
+z_index = 1
+mesh = SubResource( 3 )
+texture = ExtResource( 28 )

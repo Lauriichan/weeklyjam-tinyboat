@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Wild Times.wav-2809b856407a01e22901ddac296e7a44.sample"
+
+[deps]
+
+source_file="res://audio/music/Wild Times.wav"
+dest_files=[ "res://.import/Wild Times.wav-2809b856407a01e22901ddac296e7a44.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
