@@ -1,0 +1,433 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://scripts/GameHandler.gd" type="Script" id=1]
+[ext_resource path="res://scripts/menu/ChangeScene.gd" type="Script" id=2]
+[ext_resource path="res://images/ui/background.png" type="Texture" id=3]
+[ext_resource path="res://images/ui/TITLE-SCREEN.png" type="Texture" id=4]
+[ext_resource path="res://styles/Font/Normal.tres" type="DynamicFont" id=5]
+[ext_resource path="res://styles/Font/Giant.tres" type="DynamicFont" id=6]
+[ext_resource path="res://styles/Empty.tres" type="StyleBox" id=7]
+[ext_resource path="res://styles/Button/Normal.tres" type="StyleBox" id=8]
+[ext_resource path="res://styles/Button/Pressed.tres" type="StyleBox" id=9]
+[ext_resource path="res://styles/Button/Hover.tres" type="StyleBox" id=10]
+[ext_resource path="res://scripts/menu/main/Options.gd" type="Script" id=11]
+[ext_resource path="res://scripts/menu/options/Controller.gd" type="Script" id=12]
+[ext_resource path="res://scripts/menu/options/Fullscreen.gd" type="Script" id=13]
+[ext_resource path="res://scripts/ui/TextureSlider.gd" type="Script" id=14]
+[ext_resource path="res://images/ui/slider.png" type="Texture" id=15]
+[ext_resource path="res://images/ui/slider-fill.png" type="Texture" id=16]
+[ext_resource path="res://images/ui/slider-fill-start.png" type="Texture" id=17]
+[ext_resource path="res://images/ui/slider-fill-end.png" type="Texture" id=18]
+[ext_resource path="res://images/ui/slider-fill-offset-red.png" type="Texture" id=19]
+[ext_resource path="res://images/ui/slider-button.png" type="Texture" id=20]
+[ext_resource path="res://images/ui/slider-button_selectedddddd.png" type="Texture" id=21]
+[ext_resource path="res://scripts/menu/main/Exit.gd" type="Script" id=22]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 0.0
+content_margin_right = 0.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="ArrayMesh" id=2]
+
+[node name="Scene" type="Control"]
+anchor_top = -0.0015502
+anchor_right = 1.0
+anchor_bottom = 0.99845
+margin_left = -0.594604
+margin_top = 3.59118
+margin_right = -0.594604
+margin_bottom = 3.59119
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="TITLE-SCREEN" type="Sprite" parent="."]
+scale = Vector2( 2.1, 2.1 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -337.0
+margin_top = -448.0
+margin_right = 338.0
+margin_bottom = -335.0
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 0.607843 )
+text = "Tiny Boat"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main" type="MarginContainer" parent="."]
+margin_left = -192.0
+margin_top = 96.0
+margin_right = 192.0
+margin_bottom = 220.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Main"]
+margin_right = 384.0
+margin_bottom = 340.0
+alignment = 1
+
+[node name="Play" type="Button" parent="Main/VBox"]
+margin_right = 384.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/focus = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 7 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "PLAY"
+script = ExtResource( 2 )
+scene = "Game"
+focus = true
+
+[node name="HSeparator" type="HSeparator" parent="Main/VBox"]
+margin_top = 68.0
+margin_right = 384.0
+margin_bottom = 88.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="Options" type="Button" parent="Main/VBox"]
+margin_top = 92.0
+margin_right = 384.0
+margin_bottom = 156.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/focus = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 7 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "OPTIONS"
+script = ExtResource( 11 )
+select_control = "VBox/Back/Back"
+
+[node name="HSeparator2" type="HSeparator" parent="Main/VBox"]
+margin_top = 160.0
+margin_right = 384.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="Tutorial" type="Button" parent="Main/VBox"]
+margin_top = 184.0
+margin_right = 384.0
+margin_bottom = 248.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/focus = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 7 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "TUTORIAL"
+script = ExtResource( 2 )
+scene = "Tutorial"
+
+[node name="HSeparator3" type="HSeparator" parent="Main/VBox"]
+margin_top = 252.0
+margin_right = 384.0
+margin_bottom = 272.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="Exit" type="Button" parent="Main/VBox"]
+margin_top = 276.0
+margin_right = 384.0
+margin_bottom = 340.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/focus = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 7 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "EXIT"
+script = ExtResource( 22 )
+
+[node name="Options" type="MarginContainer" parent="."]
+visible = false
+margin_left = -400.0
+margin_top = 32.0
+margin_right = 384.0
+margin_bottom = 220.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Options"]
+margin_right = 792.0
+margin_bottom = 444.0
+
+[node name="Back" type="MarginContainer" parent="Options/VBox"]
+margin_right = 792.0
+margin_bottom = 64.0
+
+[node name="Back" type="Button" parent="Options/VBox/Back"]
+margin_right = 792.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/focus = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 7 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "BACK"
+script = ExtResource( 11 )
+main_menu = true
+select_control = "VBox/Options"
+
+[node name="HSeparator" type="HSeparator" parent="Options/VBox"]
+margin_top = 68.0
+margin_right = 792.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 32 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="Container" type="HBoxContainer" parent="Options/VBox"]
+margin_top = 104.0
+margin_right = 792.0
+margin_bottom = 444.0
+
+[node name="Left" type="VBoxContainer" parent="Options/VBox/Container"]
+margin_right = 384.0
+margin_bottom = 340.0
+rect_min_size = Vector2( 384, 0 )
+
+[node name="Label" type="Label" parent="Options/VBox/Container/Left"]
+margin_right = 384.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/normal = SubResource( 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "Controller"
+align = 1
+valign = 1
+autowrap = true
+uppercase = true
+
+[node name="HSeparator5" type="HSeparator" parent="Options/VBox/Container/Left"]
+margin_top = 68.0
+margin_right = 384.0
+margin_bottom = 88.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="Label2" type="Label" parent="Options/VBox/Container/Left"]
+margin_top = 92.0
+margin_right = 384.0
+margin_bottom = 156.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/normal = SubResource( 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "Fullscreen"
+align = 1
+valign = 1
+autowrap = true
+uppercase = true
+
+[node name="HSeparator6" type="HSeparator" parent="Options/VBox/Container/Left"]
+margin_top = 160.0
+margin_right = 384.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="Label3" type="Label" parent="Options/VBox/Container/Left"]
+margin_top = 184.0
+margin_right = 384.0
+margin_bottom = 248.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/normal = SubResource( 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "SFX Volume"
+align = 1
+valign = 1
+autowrap = true
+uppercase = true
+
+[node name="HSeparator7" type="HSeparator" parent="Options/VBox/Container/Left"]
+margin_top = 252.0
+margin_right = 384.0
+margin_bottom = 272.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="Label4" type="Label" parent="Options/VBox/Container/Left"]
+margin_top = 276.0
+margin_right = 384.0
+margin_bottom = 340.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/normal = SubResource( 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "Music Volume"
+align = 1
+valign = 1
+autowrap = true
+uppercase = true
+
+[node name="VSeparator" type="VSeparator" parent="Options/VBox/Container"]
+margin_left = 388.0
+margin_right = 404.0
+margin_bottom = 340.0
+rect_min_size = Vector2( 16, 0 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="Right" type="VBoxContainer" parent="Options/VBox/Container"]
+margin_left = 408.0
+margin_right = 792.0
+margin_bottom = 340.0
+rect_min_size = Vector2( 384, 0 )
+
+[node name="Controller" type="Button" parent="Options/VBox/Container/Right"]
+margin_right = 384.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/focus = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 7 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "OFF"
+script = ExtResource( 12 )
+
+[node name="HSeparator4" type="HSeparator" parent="Options/VBox/Container/Right"]
+margin_top = 68.0
+margin_right = 384.0
+margin_bottom = 88.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="Fullscreen" type="Button" parent="Options/VBox/Container/Right"]
+margin_top = 92.0
+margin_right = 384.0
+margin_bottom = 156.0
+rect_min_size = Vector2( 0, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/focus = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 7 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "OFF"
+script = ExtResource( 13 )
+
+[node name="HSeparator5" type="HSeparator" parent="Options/VBox/Container/Right"]
+margin_top = 160.0
+margin_right = 384.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="SfxVolume" type="Control" parent="Options/VBox/Container/Right"]
+margin_top = 184.0
+margin_right = 384.0
+margin_bottom = 248.0
+rect_min_size = Vector2( 24.3, 0 )
+focus_mode = 2
+script = ExtResource( 14 )
+bar_texture = ExtResource( 15 )
+block_texture = ExtResource( 16 )
+start_block_texture = ExtResource( 17 )
+end_block_texture = ExtResource( 18 )
+offset_block_texture = ExtResource( 19 )
+max_value = 20.0
+block_stretch = 1.581
+block_offset_x = 4.72
+block_offset_y = 9.48
+block_row_offset = 4.741
+max_on_start = false
+bar_offset = 9.5
+min_size = Vector2( 0, 64 )
+slider_texture = ExtResource( 20 )
+slider_texture_highlight = ExtResource( 21 )
+slider_size = 3.0
+slider_offset_x = -3.0
+slider_offset_y = -14.25
+_focus_mode = 2
+storage_path = "sfx_volume"
+
+[node name="HSeparator6" type="HSeparator" parent="Options/VBox/Container/Right"]
+margin_top = 252.0
+margin_right = 384.0
+margin_bottom = 272.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/separator = ExtResource( 7 )
+
+[node name="MusicVolume2" type="Control" parent="Options/VBox/Container/Right"]
+margin_top = 276.0
+margin_right = 384.0
+margin_bottom = 340.0
+rect_min_size = Vector2( 24.3, 0 )
+focus_mode = 2
+script = ExtResource( 14 )
+bar_texture = ExtResource( 15 )
+block_texture = ExtResource( 16 )
+start_block_texture = ExtResource( 17 )
+end_block_texture = ExtResource( 18 )
+offset_block_texture = ExtResource( 19 )
+max_value = 20.0
+block_stretch = 1.581
+block_offset_x = 4.72
+block_offset_y = 9.48
+block_row_offset = 4.741
+max_on_start = false
+bar_offset = 9.5
+min_size = Vector2( 0, 64 )
+slider_texture = ExtResource( 20 )
+slider_texture_highlight = ExtResource( 21 )
+slider_size = 3.0
+slider_offset_x = -3.0
+slider_offset_y = -14.25
+_focus_mode = 2
+storage_path = "music_volume"
+
+[node name="BackgroundMesh" type="MeshInstance2D" parent="."]
+mesh = SubResource( 2 )
+texture = ExtResource( 3 )

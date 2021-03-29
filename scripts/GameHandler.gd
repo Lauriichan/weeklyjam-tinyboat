@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 export var min_size : Vector2;
 var window_size : Vector2;
@@ -26,8 +26,6 @@ func _physics_process(_delta):
 		window_position = OS.get_window_position();
 
 func update_mesh(var mesh_size : Vector2):
-	
-	print(mesh_size)
 	if mesh2d == null:
 		mesh2d = get_node("BackgroundMesh");
 		if mesh2d == null:
@@ -35,10 +33,8 @@ func update_mesh(var mesh_size : Vector2):
 	var mesh : ArrayMesh = mesh2d.get_mesh();
 	if mesh.get_surface_count() != 0:
 		mesh.surface_remove(0);
-	
 	if mesh_size.x == mesh_size.y:
 		return;
-	
 	var arr = [];
 	arr.resize(Mesh.ARRAY_MAX);
 		

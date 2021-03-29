@@ -20,6 +20,9 @@ export var block_row_offset : float = 0 setget set_row_offset;
 export var vertical_row : bool = false setget set_vertical;
 export var max_on_start : bool = true;
 
+export var bar_offset : float = 0 setget set_bar_offset;
+export var min_size : Vector2 setget set_min_size;
+
 export var opacity : float = 100 setget set_opacity;
 
 var ratio : float = 1;
@@ -27,6 +30,16 @@ var offset_ratio : float = 1;
 
 var block_size : Vector2;
 var alpha : float = 0;
+
+func set_min_size(var _size : Vector2):
+	min_size = _size;
+
+func set_bar_offset(var _offset : float):
+	if _offset < 0:
+		bar_offset = 0;
+	else:
+		bar_offset = _offset;
+	update();
 
 func set_opacity(var _opacity : float):
 	if _opacity > 100:
@@ -135,40 +148,45 @@ func _ready():
 	
 func _draw():
 	if bar_texture != null:
-		bar_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(0, 0), Vector2(rect_size.x, rect_size.x * ratio)), false);
-		if max_value > value:
-			if vertical_row:
+		if vertical_row:
+			bar_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(bar_offset, 0), Vector2(rect_size.x, rect_size.x * ratio)), false);
+			if max_value > value:
 				draw_row_y();
-			else:
+		else:
+			bar_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(0, bar_offset), Vector2(rect_size.x, rect_size.x * ratio)), false);
+			if max_value > value:
 				draw_row_x();
 
 func draw_row_y():
 	var difference = int(max_value - round(value));
 	var offset_y = block_offset_y;
+	var offset_x = block_offset_x + bar_offset;
 	var expand_y;
 	var _offset_size;
 	if offset_block_texture == null:
 		expand_y = block_size.y * block_stretch + block_row_offset;
 	else:
 		_offset_size = Vector2(block_row_offset * offset_ratio, block_row_offset);
+		expand_y = block_size.y * block_stretch;
 	var current_size = Vector2(block_size.x * block_stretch, block_size.y * block_stretch);
 	var modulation = Color(1, 1, 1, alpha);
 	var max_draw = int(max_value) - 1;
 	for i in range(difference):
 		if i == 0 && start_block_texture != null:
-			start_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(block_offset_x, offset_y), current_size), false);
+			start_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, offset_y), current_size), false);
 		else:
 			if i == max_draw && end_block_texture != null:
-				end_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(block_offset_x, offset_y), current_size), false, modulation);
+				end_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, offset_y), current_size), false, modulation);
 			elif block_texture != null:
-				block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(block_offset_x, offset_y), current_size), false, modulation);
+				block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, offset_y), current_size), false, modulation);
 		offset_y += expand_y;
 		if i != max_draw && offset_block_texture != null:
-			offset_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(block_offset_x, offset_y), _offset_size), false, modulation);
+			offset_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, offset_y), _offset_size), false, modulation);
 			expand_y += block_row_offset;
 
 func draw_row_x():
 	var difference = int(max_value - round(value));
+	var offset_y = block_offset_y + bar_offset;
 	var offset_x = block_offset_x;
 	var expand_x;
 	var _offset_size;
@@ -182,16 +200,17 @@ func draw_row_x():
 	var max_draw = int(max_value) - 1;
 	for i in range(difference):
 		if i == 0 && start_block_texture != null:
-			start_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, block_offset_y), current_size), false, modulation);
+			start_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, offset_y), current_size), false, modulation);
 		else:
 			if i == max_draw && end_block_texture != null:
-				end_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, block_offset_y), current_size), false, modulation);
+				end_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, offset_y), current_size), false, modulation);
 			elif block_texture != null:
-				block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, block_offset_y), current_size), false, modulation);
+				block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, offset_y), current_size), false, modulation);
 		offset_x += expand_x;
 		if i != max_draw && offset_block_texture != null:
-			offset_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, block_offset_y), _offset_size), false, modulation);
+			offset_block_texture.draw_rect(self.get_canvas_item(), Rect2(Vector2(offset_x, offset_y), _offset_size), false, modulation);
 			offset_x += block_row_offset;
 
 func resize():
 	set_size(Vector2(rect_size.x, rect_size.x * ratio));
+	rect_min_size = min_size;
