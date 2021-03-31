@@ -20,10 +20,12 @@ margin_left = -0.594604
 margin_top = 3.59118
 margin_right = -0.594604
 margin_bottom = 3.59125
+rect_pivot_offset = Vector2( 1792.94, -469.704 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+min_size = Vector2( 640, 640 )
 request_music = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]

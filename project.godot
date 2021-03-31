@@ -140,7 +140,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Tiny Boat"
+config/name="Cannon Ricochet"
+config/description="Try to survive as long as possible!"
 run/main_scene="res://scenes/Menu.tscn"
 boot_splash/image="res://icon.png"
 boot_splash/fullsize=false
