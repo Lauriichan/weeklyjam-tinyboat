@@ -1,15 +1,18 @@
 extends Node
 
 export var min_size : Vector2;
+export var request_music : int = -1;
 var window_size : Vector2;
 var window_position : Vector2;
 
 var mesh2d : MeshInstance2D;
 
-func ready():
+func _ready():
 	window_size = OS.get_window_size();
 	window_position = OS.get_window_position();
 	update_mesh(window_size);
+	if request_music != -1:
+		get_node("/root/AudioHandler").request(request_music);
 
 func _physics_process(_delta):
 	if OS.get_window_size() != window_size:

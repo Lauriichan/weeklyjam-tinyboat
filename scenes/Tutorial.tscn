@@ -1,0 +1,122 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://scripts/GameHandler.gd" type="Script" id=1]
+[ext_resource path="res://scripts/menu/ChangeScene.gd" type="Script" id=2]
+[ext_resource path="res://images/ui/background.png" type="Texture" id=3]
+[ext_resource path="res://styles/Font/Normal.tres" type="DynamicFont" id=5]
+[ext_resource path="res://scripts/menu/tutorial/Display.gd" type="Script" id=6]
+[ext_resource path="res://styles/Empty.tres" type="StyleBox" id=7]
+[ext_resource path="res://styles/Button/Normal.tres" type="StyleBox" id=8]
+[ext_resource path="res://styles/Button/Pressed.tres" type="StyleBox" id=9]
+[ext_resource path="res://styles/Button/Hover.tres" type="StyleBox" id=10]
+
+[sub_resource type="ArrayMesh" id=1]
+
+[node name="Scene" type="Control"]
+anchor_top = -0.0015502
+anchor_right = 1.0
+anchor_bottom = 0.99845
+margin_left = -0.594604
+margin_top = 3.59118
+margin_right = -0.594604
+margin_bottom = 3.59125
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+request_music = 0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -600.0
+margin_top = -600.0
+margin_right = 600.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 1200, 1200 )
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Display" type="TextureRect" parent="."]
+margin_left = -512.0
+margin_top = -512.0
+margin_right = 512.0
+margin_bottom = 512.0
+rect_min_size = Vector2( 1024, 1024 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Previous" type="Button" parent="."]
+margin_left = -480.0
+margin_top = 420.0
+margin_right = -224.0
+margin_bottom = 484.0
+rect_min_size = Vector2( 256, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/disabled = ExtResource( 7 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 0 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+disabled = true
+text = "PREVIOUS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="Button" parent="."]
+margin_left = -128.0
+margin_top = 420.0
+margin_right = 128.0
+margin_bottom = 484.0
+rect_min_size = Vector2( 256, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "MENU"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+scene = "Menu"
+
+[node name="Next" type="Button" parent="."]
+margin_left = 224.0
+margin_top = 420.0
+margin_right = 480.0
+margin_bottom = 484.0
+rect_min_size = Vector2( 256, 64 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/disabled = ExtResource( 7 )
+custom_styles/normal = ExtResource( 8 )
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 0 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+disabled = true
+text = "NEXT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundMesh" type="MeshInstance2D" parent="."]
+mesh = SubResource( 1 )
+texture = ExtResource( 3 )
+[connection signal="pressed" from="Previous" to="Display" method="_on_Previous_pressed"]
+[connection signal="pressed" from="Next" to="Display" method="_on_Next_pressed"]

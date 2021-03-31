@@ -1,5 +1,6 @@
 tool
 extends TextureBar
+class_name TextureSlider
 
 export var slider_texture : Texture setget set_slider_texture;
 export var slider_texture_highlight : Texture setget set_slider_texture_highlight;
@@ -48,8 +49,8 @@ func set_slider_texture_highlight(var texture : Texture):
 	update();
 	
 func _ready():
-	if storage_path and storage_path in storage.data:
-		set_value(max_value - storage.data[storage_path]);
+	if storage_path and storage.has_value(storage_path):
+		set_value(max_value - storage.get_value(storage_path));
 	
 func _draw():
 	if slider_texture != null:
@@ -152,11 +153,7 @@ func get_value_at_h(var position : Vector2) -> float:
 func update_value(var value):
 	set_value(value);
 	if storage_path:
-		storage.data[storage_path] = get_actual_value();
-		storage.save_to_file();
-	
-func get_actual_value() -> float:
-	return max_value - value;
+		storage.set_value(storage_path, get_actual_value());
 
 func _notification(what):
 	match what:

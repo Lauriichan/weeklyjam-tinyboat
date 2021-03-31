@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://images/annimated/cannon/AnimationTree.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://scripts/settings/PlayerSettings.gd" type="Script" id=2]
@@ -30,6 +30,36 @@
 [ext_resource path="res://images/ui/Healthbar-Block.png" type="Texture" id=28]
 [ext_resource path="res://scripts/enemy/CannonBall.gd" type="Script" id=29]
 [ext_resource path="res://images/objects/Tinyboat-cannonball.png" type="Texture" id=30]
+[ext_resource path="res://audio/effects/shoot0.wav" type="AudioStream" id=31]
+[ext_resource path="res://scripts/EffectPlayer.gd" type="Script" id=32]
+[ext_resource path="res://scripts/player/Shield.gd" type="Script" id=33]
+[ext_resource path="res://scripts/ShakeCamera2D.gd" type="Script" id=34]
+[ext_resource path="res://audio/effects/explosion0.wav" type="AudioStream" id=35]
+[ext_resource path="res://scripts/PauseHandler.gd" type="Script" id=36]
+[ext_resource path="res://scripts/CannonBalls.gd" type="Script" id=37]
+[ext_resource path="res://images/ui/BRETT-popup.png" type="Texture" id=38]
+[ext_resource path="res://styles/Empty.tres" type="StyleBox" id=39]
+[ext_resource path="res://styles/Button/Normal.tres" type="StyleBox" id=40]
+[ext_resource path="res://styles/Button/Pressed.tres" type="StyleBox" id=41]
+[ext_resource path="res://styles/Button/Hover.tres" type="StyleBox" id=42]
+[ext_resource path="res://styles/Font/Small.tres" type="DynamicFont" id=43]
+[ext_resource path="res://styles/Font/Normal.tres" type="DynamicFont" id=44]
+[ext_resource path="res://scripts/ui/TextureSlider.gd" type="Script" id=45]
+[ext_resource path="res://images/ui/slider.png" type="Texture" id=46]
+[ext_resource path="res://images/ui/slider-fill.png" type="Texture" id=47]
+[ext_resource path="res://images/ui/slider-fill-start.png" type="Texture" id=48]
+[ext_resource path="res://images/ui/slider-fill-end.png" type="Texture" id=49]
+[ext_resource path="res://images/ui/slider-fill-offset-red.png" type="Texture" id=50]
+[ext_resource path="res://images/ui/slider-button_selectedddddd.png" type="Texture" id=51]
+[ext_resource path="res://images/ui/slider-button.png" type="Texture" id=52]
+[ext_resource path="res://scripts/menu/options/Controller.gd" type="Script" id=53]
+[ext_resource path="res://scripts/menu/ingame/Menu.gd" type="Script" id=54]
+[ext_resource path="res://scripts/menu/ingame/Exit.gd" type="Script" id=55]
+[ext_resource path="res://scripts/menu/ingame/Back.gd" type="Script" id=56]
+[ext_resource path="res://scripts/ui/ValueDisplay.gd" type="Script" id=57]
+[ext_resource path="res://scripts/enemy/SpawnLocation.gd" type="Script" id=58]
+[ext_resource path="res://audio/effects/death0.wav" type="AudioStream" id=59]
+[ext_resource path="res://audio/effects/hit.wav" type="AudioStream" id=61]
 
 [sub_resource type="TileSet" id=1]
 0/name = "water-001.png 0"
@@ -50,18 +80,18 @@
 [sub_resource type="PhysicsMaterial" id=2]
 friction = 3.0
 bounce = 1.0
-absorbent = true
 
-[sub_resource type="PhysicsMaterial" id=4]
+[sub_resource type="PhysicsMaterial" id=3]
 friction = 8.0
 rough = true
 bounce = 2.0
 
-[sub_resource type="ArrayMesh" id=3]
+[sub_resource type="ArrayMesh" id=4]
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 6 )
 min_size = Vector2( 640, 640 )
+request_music = 1
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2( 0.333, 0.333 )
@@ -74,13 +104,25 @@ scroll_speed = 4
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+script = ExtResource( 34 )
+decay = 0.8
+max_offset = Vector2( 60, 30 )
+max_roll = 0.1
+shake_power = 2.0
 
-[node name="Player" type="KinematicBody2D" parent="."]
+[node name="Player" type="RigidBody2D" parent="."]
 collision_layer = 2
 collision_mask = 2
-motion/sync_to_physics = true
+mode = 1
+mass = 0.01
+gravity_scale = 0.0
+can_sleep = false
 script = ExtResource( 5 )
 components = [ ExtResource( 10 ) ]
+
+[node name="HitPlayer" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource( 61 )
+script = ExtResource( 32 )
 
 [node name="Boat-Texture" type="Sprite" parent="Player"]
 scale = Vector2( 2.5, 2.5 )
@@ -94,33 +136,69 @@ region_rect = Rect2( 0, 0, 15, 3 )
 
 [node name="Boat" type="CollisionPolygon2D" parent="Player"]
 visible = false
-polygon = PoolVector2Array( -3.84482, -39.9959, 3.67393, -40.0061, 3.67393, -37.4885, 6.22866, -37.4885, 6.24106, -35.0206, 8.75858, -35.0082, 8.77098, -32.5031, 11.2637, -32.5279, 11.2141, -24.9754, 16.2367, -25.0126, 16.2119, -22.5446, 13.682, -22.5198, 13.7316, -20.0519, 16.2491, -20.0395, 16.2367, -15.0417, 18.7294, -15.0417, 18.7542, -10.0066, 21.2346, -10.0066, 21.2346, 4.93725, 23.7397, 4.92485, 23.7645, 7.46717, 21.2222, 7.50437, 21.2594, 20.0052, 18.8163, 19.9928, 18.7542, 29.9016, 16.3235, 30.0132, 16.2615, 34.9863, 13.7688, 35.0111, 13.7316, 37.479, 8.74618, 37.5162, 8.70897, 39.9965, -8.71523, 39.9841, -8.74004, 37.4542, -13.7007, 37.479, -13.6883, 34.9615, -16.2306, 34.9491, -16.2926, 29.9636, -18.7357, 29.9636, -18.7109, 19.968, -21.216, 19.9431, -21.216, 7.46716, -23.7335, 7.47957, -23.7459, 5.03646, -21.2284, 5.02406, -21.216, -9.96945, -18.7729, -9.96945, -18.7481, -15.0169, -16.2554, -15.0045, -16.2554, -20.0147, -13.7875, -19.9775, -13.7751, -22.5198, -16.2554, -22.5198, -16.2554, -25.0126, -11.2948, -24.9754, -11.208, -32.5155, -8.78964, -32.5279, -8.78964, -34.9958, -6.27212, -35.033, -6.25972, -37.4886, -3.7546, -37.501 )
+polygon = PoolVector2Array( 3.73857, -36.0387, 6.22866, -37.4885, 6.24106, -35.0206, 8.75858, -35.0082, 8.77098, -32.5031, 11.2637, -32.5279, 11.2141, -24.9754, 16.2367, -25.0126, 16.2119, -22.5446, 13.682, -22.5198, 13.7316, -20.0519, 16.2491, -20.0395, 16.2367, -15.0417, 18.7294, -15.0417, 18.7542, -10.0066, 21.2346, -10.0066, 21.2346, 4.93725, 23.7397, 4.92485, 23.7645, 7.46717, 21.2222, 7.50437, 21.2594, 20.0052, 18.8163, 19.9928, 18.7542, 29.9016, 16.3235, 30.0132, 16.2615, 34.9863, 13.7688, 35.0111, 13.7316, 37.479, 8.74618, 37.5162, 8.70897, 39.9965, -8.71523, 39.9841, -8.74004, 37.4542, -13.7007, 37.479, -13.6883, 34.9615, -16.2306, 34.9491, -16.2926, 29.9636, -18.7357, 29.9636, -18.7109, 19.968, -21.216, 19.9431, -21.216, 7.46716, -23.7335, 7.47957, -23.7459, 5.03646, -21.2284, 5.02406, -21.216, -9.96945, -18.7729, -9.96945, -18.7481, -15.0169, -16.2554, -15.0045, -16.2554, -20.0147, -13.7875, -19.9775, -13.7751, -22.5198, -16.2554, -22.5198, -16.2554, -25.0126, -11.2948, -24.9754, -11.208, -32.5155, -8.78964, -32.5279, -8.78964, -34.9958, -6.27212, -35.033, -6.25972, -37.4886, -3.80623, -35.9273 )
 
 [node name="Shield" type="StaticBody2D" parent="Player"]
 position = Vector2( 0, -40 )
 collision_layer = 2
 collision_mask = 2147483650
-constant_angular_velocity = 5.0
 physics_material_override = SubResource( 2 )
+script = ExtResource( 33 )
 
 [node name="Shield" type="CollisionPolygon2D" parent="Player/Shield"]
 visible = false
-polygon = PoolVector2Array( -19.4453, -2.51563, -19.4547, 2.68016, -9.15142, 2.68016, -9.15142, 0.0521965, 9.03577, 0.0939102, 9.03577, 2.63845, 19.3391, 2.68016, 19.3808, -2.57577, 14.2083, -2.57577, 14.2083, -5.12031, -14.3239, -5.07859, -14.3239, -2.53405 )
+position = Vector2( -0.0496063, -0.0496063 )
+polygon = PoolVector2Array( -18.7908, -2.47382, -18.7908, 2.52464, -8.77658, 2.52286, -6.2381, 2.45406, -3.72878, 3.95523, 3.76034, 3.87171, 6.22466, 2.47615, 8.70955, 2.53341, 18.7152, 2.51586, 18.724, -2.47382, 13.7256, -2.46505, 13.7256, -4.95551, -13.7748, -4.95552, -13.8011, -2.48259 )
+one_way_collision_margin = 0.0
 
 [node name="Enemies" type="Node2D" parent="."]
 script = ExtResource( 7 )
-array = [ "BigBoat", "SmallBoat" ]
+enemies = [ NodePath("../Templates/BigBoat"), NodePath("../Templates/SmallBoat") ]
+max_amount = [ 2, 3 ]
+spawn_speed = 5
+spawn_tick = 9.0
+
+[node name="Node2D" type="Node2D" parent="Enemies"]
+position = Vector2( -266.286, -320.504 )
+script = ExtResource( 58 )
+radius = 110.0
+speed = 100.0
+
+[node name="Node2D2" type="Node2D" parent="Enemies"]
+position = Vector2( 266.231, -264.62 )
+script = ExtResource( 58 )
+radius = 120.0
+speed = 100.0
+
+[node name="Node2D3" type="Node2D" parent="Enemies"]
+position = Vector2( 287.098, 162.758 )
+script = ExtResource( 58 )
+radius = 100.0
+speed = 100.0
+
+[node name="Node2D4" type="Node2D" parent="Enemies"]
+position = Vector2( -247.535, 345.151 )
+script = ExtResource( 58 )
+radius = 100.0
+speed = 100.0
+
+[node name="Node2D5" type="Node2D" parent="Enemies"]
+position = Vector2( -310.819, 0.706253 )
+script = ExtResource( 58 )
+radius = 110.0
+speed = 100.0
 
 [node name="CannonBalls" type="Node2D" parent="."]
+script = ExtResource( 37 )
 
-[node name="Control" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Healthbar" type="Control" parent="Control"]
+[node name="Healthbar" type="Control" parent="UI"]
 anchor_top = -0.0297302
 anchor_bottom = -0.0297302
 margin_left = 500.24
@@ -138,14 +216,13 @@ block_texture = ExtResource( 28 )
 start_block_texture = ExtResource( 20 )
 end_block_texture = ExtResource( 27 )
 offset_block_texture = ExtResource( 24 )
-value = 10.0
 max_value = 10.0
 block_stretch = 6.04
 block_offset_x = 42.27
 block_offset_y = 6.03
 block_row_offset = 6.03
 
-[node name="Speedbar" type="Control" parent="Control"]
+[node name="Speedbar" type="Control" parent="UI"]
 margin_left = 417.886
 margin_top = 504.938
 margin_right = 490.886
@@ -165,7 +242,7 @@ block_offset_y = 2.8
 block_row_offset = 5.61
 max_on_start = false
 
-[node name="Fuelbar" type="Control" parent="Control"]
+[node name="Fuelbar" type="Control" parent="UI"]
 anchor_top = 0.033371
 anchor_bottom = 0.033371
 margin_left = 505.427
@@ -189,6 +266,37 @@ vertical_row = true
 max_on_start = false
 opacity = 65.0
 
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+margin_left = -506.288
+margin_top = -509.117
+margin_right = -466.288
+margin_bottom = -419.117
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="UI/VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 43.0
+custom_fonts/font = ExtResource( 44 )
+text = "0"
+script = ExtResource( 57 )
+signal_node = "/root/Score"
+signal_name = "score_updated"
+
+[node name="Highscore" type="Label" parent="UI/VBoxContainer"]
+margin_top = 47.0
+margin_right = 40.0
+margin_bottom = 69.0
+custom_fonts/font = ExtResource( 43 )
+custom_colors/font_color = Color( 0.921569, 1, 0, 1 )
+text = "0"
+script = ExtResource( 57 )
+signal_node = "/root/Score"
+signal_name = "highscore_updated"
+value_path = "highscore"
+default_value = "0"
+
 [node name="Settings" type="Node" parent="."]
 
 [node name="Player" type="Node" parent="Settings"]
@@ -196,12 +304,12 @@ script = ExtResource( 2 )
 use_controller = true
 rotation_speed = 2.0
 move_speed = 1.5
-fuel_usage = 0.08
+fuel_usage = 0.12
 fuel_regen = 0.03
 
 [node name="Enemy" type="Node" parent="Settings"]
 script = ExtResource( 3 )
-cannon_rotate_speed = 1.25
+cannon_rotate_speed = 1.8
 
 [node name="Handlers" type="Node" parent="."]
 
@@ -209,78 +317,131 @@ cannon_rotate_speed = 1.25
 script = ExtResource( 8 )
 critical_block_texture = ExtResource( 23 )
 
+[node name="PauseHandler" type="Node" parent="Handlers"]
+script = ExtResource( 36 )
+
 [node name="Templates" type="Node" parent="."]
 
 [node name="BigBoat" type="KinematicBody2D" parent="Templates"]
-position = Vector2( -438.778, 383.149 )
-collision_layer = 2
-collision_mask = 2
+position = Vector2( -647.953, 589.95 )
+collision_layer = 0
+collision_mask = 0
 script = ExtResource( 4 )
+health = 5
+score = 50
+sound = ExtResource( 59 )
 
 [node name="Sprite" type="Sprite" parent="Templates/BigBoat"]
 scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 15 )
 
 [node name="Collision" type="CollisionPolygon2D" parent="Templates/BigBoat"]
+visible = false
 scale = Vector2( 2.5, 2.5 )
 polygon = PoolVector2Array( 6.51563, 32, 6.50781, 31, 7.49219, 31, 7.5, 29.0078, 8.5, 29.0078, 8.5, 25.9922, 9.49012, 26.0104, 9.50781, 22.9844, 10.5, 23, 10.5, 16, 11.5, 15.9922, 11.5078, 12, 12.4922, 11.9922, 12.5078, 10, 14.5, 10.0078, 14.5, 9, 16.5, 9, 16.5078, 8, 17.5, 7.99219, 17.5078, 4.99219, 18.5078, 5, 18.5, 0, 17.5, 0, 17.5, -3, 16.5, -3, 16.5078, -4, 14.5, -4, 14.5, -5, 12.5, -4.99219, 12.5, -7, 11.5, -7, 11.5078, -9.00781, 14.5, -9.00781, 14.5, -9.98438, 11.5078, -10, 11.5, -12.0078, 13.5, -12.0078, 13.4922, -13, 10.4922, -13, 10.4922, -15, 12.5078, -15.0078, 12.5, -16, 9.49219, -16, 9.5, -18.0078, 8.48438, -18, 8.5, -22.9922, 7.5, -23, 7.50781, -24, 9.49219, -24, 9.5, -27, 6.49219, -27.0078, 6.49219, -28, 5.49219, -28, 5.5, -30, 4.5, -30, 4.5, -31, 2.5, -31.0078, 2.50781, -32.0078, -2.50781, -32, -2.5, -31, -4.5, -30.9922, -4.49219, -30, -5.49219, -29.9922, -5.5, -28.0078, -6.5, -27.9922, -6.50781, -27, -9.50781, -26.9922, -9.5, -23.9922, -7.5, -24, -7.5, -22.9922, -8.5, -22.9922, -8.50781, -18, -9.5, -18, -9.50781, -16, -12.5, -16, -12.5, -14.9922, -10.5078, -14.9922, -10.5, -13, -13.5, -13, -13.5078, -11.9922, -11.5, -11.9922, -11.5078, -9.99219, -14.5, -9.99219, -14.5, -9, -11.5, -8.99219, -11.5, -7, -12.5, -6.99219, -12.5, -5, -14.5, -4.99219, -14.5078, -3.99219, -16.5, -3.99219, -16.5, -3, -17.5, -3, -17.5, 0, -18.5, -0.0078125, -18.5, 5.00781, -17.5, 5, -17.4922, 8.00781, -16.5, 8, -16.5, 9, -14.5, 9, -14.4922, 10.0078, -12.5078, 10, -12.5078, 12.0078, -11.5, 12.0078, -11.5, 15.9922, -10.5, 15.9922, -10.4922, 23, -9.5, 23.0078, -9.5, 26.0078, -8.5, 26.0078, -8.5, 29, -7.50781, 29, -7.5, 31, -6.5, 31.0078, -6.5, 32 )
 
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/BigBoat"]
+position = Vector2( 37.5, 5 )
+scale = Vector2( 1, 1 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
+
 [node name="RightCannon" type="Node2D" parent="Templates/BigBoat"]
-position = Vector2( -37.4002, 5.258 )
-scale = Vector2( 1.5, 1.5 )
-script = ExtResource( 12 )
-max_speed = 100
-min_speed = 10
-
-[node name="Sprite" type="AnimatedSprite" parent="Templates/BigBoat/RightCannon"]
-frames = ExtResource( 1 )
-animation = "Animation"
-frame = 1
-speed_scale = 2.0
-playing = true
-centered = false
-offset = Vector2( -3.5, -12.5 )
-
-[node name="LeftCannon" type="Node2D" parent="Templates/BigBoat"]
-position = Vector2( 37.4785, 5.16489 )
+position = Vector2( 37.5, 5 )
 scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 12 )
 shoot = true
-max_speed = 100
-min_speed = 10
+max_speed = 420
+min_speed = 190
+sound = ExtResource( 31 )
+shoot_point = -15.5
+ball_speed = 210.0
 
-[node name="Sprite" type="AnimatedSprite" parent="Templates/BigBoat/LeftCannon"]
+[node name="Sprite" type="AnimatedSprite" parent="Templates/BigBoat/RightCannon"]
+z_index = 2
 frames = ExtResource( 1 )
 animation = "Animation"
-frame = 1
+frame = 3
 speed_scale = 2.0
 playing = true
 centered = false
 offset = Vector2( -3.5, -12.5 )
 
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/BigBoat/RightCannon"]
+scale = Vector2( 0.666667, 0.666667 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
+
+[node name="LeftCannon" type="Node2D" parent="Templates/BigBoat"]
+position = Vector2( -37.5, 5 )
+scale = Vector2( 1.5, 1.5 )
+script = ExtResource( 12 )
+shoot = true
+max_speed = 420
+min_speed = 190
+sound = ExtResource( 31 )
+shoot_point = -15.5
+ball_speed = 210.0
+
+[node name="Sprite" type="AnimatedSprite" parent="Templates/BigBoat/LeftCannon"]
+z_index = 2
+frames = ExtResource( 1 )
+animation = "Animation"
+frame = 3
+speed_scale = 2.0
+playing = true
+centered = false
+offset = Vector2( -3.5, -12.5 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/BigBoat/LeftCannon"]
+scale = Vector2( 0.666667, 0.666667 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
+
 [node name="SmallBoat" type="KinematicBody2D" parent="Templates"]
-position = Vector2( -346.449, 354.859 )
-collision_layer = 2
-collision_mask = 2
+position = Vector2( -591.503, 627.139 )
+collision_layer = 2147483648
+collision_mask = 0
 script = ExtResource( 4 )
+health = 2
+score = 30
+sound = ExtResource( 59 )
 
 [node name="Sprite" type="Sprite" parent="Templates/SmallBoat"]
 scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 21 )
 
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/SmallBoat"]
+position = Vector2( -18.9493, -32.189 )
+scale = Vector2( 1, 1 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
+
 [node name="Cannon" type="Node2D" parent="Templates/SmallBoat"]
-position = Vector2( 0.0303345, -27.4367 )
+position = Vector2( 0, -27.5 )
 scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 12 )
+shoot = true
+max_speed = 320
+min_speed = 150
+sound = ExtResource( 31 )
+shoot_point = -15.5
+ball_speed = 250.0
 
 [node name="Sprite" type="AnimatedSprite" parent="Templates/SmallBoat/Cannon"]
+z_index = 2
 frames = ExtResource( 1 )
 animation = "Animation"
-frame = 1
+frame = 3
 speed_scale = 2.0
 playing = true
 centered = false
 offset = Vector2( -3.5, -12.5 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/SmallBoat/Cannon"]
+scale = Vector2( 0.666667, 0.666667 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
 
 [node name="Collision" type="CollisionPolygon2D" parent="Templates/SmallBoat"]
 visible = false
@@ -290,24 +451,341 @@ polygon = PoolVector2Array( -3.84482, -39.9959, 3.67393, -40.0061, 3.67393, -37.
 position = Vector2( -431.042, 661.089 )
 z_index = 1
 mass = 4.32
-physics_material_override = SubResource( 4 )
+physics_material_override = SubResource( 3 )
 gravity_scale = 0.0
+continuous_cd = 2
 contacts_reported = 8
 contact_monitor = true
 sleeping = true
 linear_damp = 0.05
 angular_damp = 0.0
 script = ExtResource( 29 )
-timeToLive = 8.0
+timeToLive = 10.0
+tick = 40
+explosion = ExtResource( 35 )
 
 [node name="Texture" type="Sprite" parent="Templates/CannonBall"]
 scale = Vector2( 2, 2 )
+z_index = 1
 texture = ExtResource( 30 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Templates/CannonBall"]
 polygon = PoolVector2Array( -5, -3, -2.99219, -3, -2.99219, -5.00781, 2.99219, -4.99219, 3.00781, -3.00781, 4.99219, -3, 5.00781, 3, 3, 3.00781, 3, 4.99219, -3, 5, -3, 3, -5, 3 )
 
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/CannonBall"]
+script = ExtResource( 32 )
+
+[node name="Menu" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseMenu" type="Control" parent="Menu"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Menu/PauseMenu"]
+margin_left = -150.0
+margin_top = -187.5
+margin_right = 150.0
+margin_bottom = 187.5
+texture = ExtResource( 38 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="Menu/PauseMenu"]
+margin_left = -115.0
+margin_top = -155.0
+margin_right = 115.0
+margin_bottom = 170.0
+rect_min_size = Vector2( 230, 140 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PauseMenu/MarginContainer2"]
+margin_right = 230.0
+margin_bottom = 325.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_right = 230.0
+margin_bottom = 43.0
+custom_fonts/font = ExtResource( 44 )
+text = "PAUSED"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="HSeparator" type="HSeparator" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_top = 47.0
+margin_right = 230.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 0, 28 )
+custom_styles/separator = ExtResource( 39 )
+
+[node name="Label2" type="Label" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_top = 79.0
+margin_right = 230.0
+margin_bottom = 101.0
+custom_fonts/font = ExtResource( 43 )
+text = "SFX Volume"
+valign = 1
+autowrap = true
+uppercase = true
+
+[node name="SfxVolume" type="Control" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_top = 105.0
+margin_right = 230.0
+margin_bottom = 133.0
+rect_min_size = Vector2( 0, 28 )
+focus_mode = 2
+script = ExtResource( 45 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+bar_texture = ExtResource( 46 )
+block_texture = ExtResource( 47 )
+start_block_texture = ExtResource( 48 )
+end_block_texture = ExtResource( 49 )
+offset_block_texture = ExtResource( 50 )
+max_value = 20.0
+block_stretch = 0.947
+block_offset_x = 2.84
+block_offset_y = 5.679
+block_row_offset = 2.84
+bar_offset = 1.0
+min_size = Vector2( 0, 28 )
+slider_texture = ExtResource( 52 )
+slider_texture_highlight = ExtResource( 51 )
+slider_size = 3.0
+slider_offset_y = -8.5
+_focus_mode = 2
+storage_path = "sfx_volume"
+
+[node name="Label3" type="Label" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_top = 137.0
+margin_right = 230.0
+margin_bottom = 159.0
+custom_fonts/font = ExtResource( 43 )
+text = "Music Volume"
+valign = 1
+autowrap = true
+uppercase = true
+
+[node name="MusicVolume" type="Control" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_top = 163.0
+margin_right = 230.0
+margin_bottom = 191.0
+rect_min_size = Vector2( 0, 28 )
+focus_mode = 2
+script = ExtResource( 45 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+bar_texture = ExtResource( 46 )
+block_texture = ExtResource( 47 )
+start_block_texture = ExtResource( 48 )
+end_block_texture = ExtResource( 49 )
+offset_block_texture = ExtResource( 50 )
+max_value = 20.0
+block_stretch = 0.947
+block_offset_x = 2.84
+block_offset_y = 5.679
+block_row_offset = 2.84
+bar_offset = 1.0
+min_size = Vector2( 0, 28 )
+slider_texture = ExtResource( 52 )
+slider_texture_highlight = ExtResource( 51 )
+slider_size = 3.0
+slider_offset_y = -8.5
+_focus_mode = 2
+storage_path = "music_volume"
+
+[node name="Label4" type="Label" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_top = 195.0
+margin_right = 230.0
+margin_bottom = 217.0
+custom_fonts/font = ExtResource( 43 )
+text = "Controller"
+valign = 1
+autowrap = true
+uppercase = true
+
+[node name="Controller" type="Button" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_top = 221.0
+margin_right = 230.0
+margin_bottom = 253.0
+rect_min_size = Vector2( 100, 32 )
+custom_styles/hover = ExtResource( 42 )
+custom_styles/pressed = ExtResource( 41 )
+custom_styles/normal = ExtResource( 40 )
+custom_fonts/font = ExtResource( 43 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "OFF"
+script = ExtResource( 53 )
+
+[node name="HSeparator2" type="HSeparator" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_top = 257.0
+margin_right = 230.0
+margin_bottom = 285.0
+rect_min_size = Vector2( 0, 28 )
+custom_styles/separator = ExtResource( 39 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer"]
+margin_top = 289.0
+margin_right = 230.0
+margin_bottom = 321.0
+
+[node name="Menu" type="Button" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer/HBoxContainer"]
+margin_right = 105.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 105, 32 )
+custom_styles/hover = ExtResource( 42 )
+custom_styles/pressed = ExtResource( 41 )
+custom_styles/normal = ExtResource( 40 )
+custom_fonts/font = ExtResource( 43 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "MENU"
+script = ExtResource( 54 )
+exit = true
+
+[node name="VSeparator2" type="VSeparator" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer/HBoxContainer"]
+margin_left = 109.0
+margin_right = 121.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 12, 0 )
+custom_styles/separator = ExtResource( 39 )
+
+[node name="Back" type="Button" parent="Menu/PauseMenu/MarginContainer2/VBoxContainer/HBoxContainer"]
+margin_left = 125.0
+margin_right = 230.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 105, 32 )
+custom_styles/hover = ExtResource( 42 )
+custom_styles/pressed = ExtResource( 41 )
+custom_styles/normal = ExtResource( 40 )
+custom_fonts/font = ExtResource( 43 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "BACK"
+script = ExtResource( 56 )
+
+[node name="ExitPopup" type="Control" parent="Menu"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Menu/ExitPopup"]
+margin_left = 125.0
+margin_top = -100.0
+margin_right = 325.0
+margin_bottom = 150.0
+rect_rotation = 90.0
+texture = ExtResource( 38 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu/ExitPopup"]
+margin_left = -110.0
+margin_top = -70.0
+margin_right = 110.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 220, 140 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/ExitPopup/MarginContainer"]
+margin_right = 220.0
+margin_bottom = 145.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Menu/ExitPopup/MarginContainer/VBoxContainer"]
+margin_right = 220.0
+margin_bottom = 98.0
+size_flags_stretch_ratio = 2.0
+custom_fonts/font = ExtResource( 43 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Are you sure that you want to exit to the main menu?"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="HSeparator" type="HSeparator" parent="Menu/ExitPopup/MarginContainer/VBoxContainer"]
+margin_top = 101.0
+margin_right = 220.0
+margin_bottom = 109.0
+rect_min_size = Vector2( 0, 8 )
+custom_styles/separator = ExtResource( 39 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/ExitPopup/MarginContainer/VBoxContainer"]
+margin_top = 113.0
+margin_right = 220.0
+margin_bottom = 145.0
+
+[node name="Yes" type="Button" parent="Menu/ExitPopup/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 100, 32 )
+custom_styles/hover = ExtResource( 42 )
+custom_styles/pressed = ExtResource( 41 )
+custom_styles/normal = ExtResource( 40 )
+custom_fonts/font = ExtResource( 43 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "YES"
+script = ExtResource( 55 )
+scene = "Menu"
+node_path = "/root/Scene/Menu/ExitPopup"
+focus = true
+
+[node name="VSeparator" type="VSeparator" parent="Menu/ExitPopup/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 104.0
+margin_right = 116.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 12, 0 )
+custom_styles/separator = ExtResource( 39 )
+
+[node name="No" type="Button" parent="Menu/ExitPopup/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 120.0
+margin_right = 220.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 100, 32 )
+custom_styles/hover = ExtResource( 42 )
+custom_styles/pressed = ExtResource( 41 )
+custom_styles/normal = ExtResource( 40 )
+custom_fonts/font = ExtResource( 43 )
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
+text = "No"
+script = ExtResource( 54 )
+
 [node name="BackgroundMesh" type="MeshInstance2D" parent="."]
-z_index = 1
-mesh = SubResource( 3 )
+z_index = 5
+mesh = SubResource( 4 )
 texture = ExtResource( 16 )

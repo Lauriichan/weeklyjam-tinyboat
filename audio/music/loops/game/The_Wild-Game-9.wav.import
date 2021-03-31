@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/The_Wild-Game-9.wav-23b1ad238e51c5cf9e9b88655683d094.sample"
+
+[deps]
+
+source_file="res://audio/music/loops/game/The_Wild-Game-9.wav"
+dest_files=[ "res://.import/The_Wild-Game-9.wav-23b1ad238e51c5cf9e9b88655683d094.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

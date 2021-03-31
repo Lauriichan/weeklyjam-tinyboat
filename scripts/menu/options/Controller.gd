@@ -1,23 +1,17 @@
 extends Button
 
 onready var storage : Storage = get_node("/root/Storage");
-var controller : bool = false;
 
 func _ready():
 	var _ignore = connect("pressed", self, "change");
-	if "controller" in storage.data:
-		update();
+	update();
 
 func change():
-	if "controller" in storage.data:
-		storage.data["controller"] = !storage.data["controller"];
-	else:
-		storage.data["controller"] = true;
-	storage.save_to_file();
+	storage.set_value("controller", !storage.get_value_or("controller", false));
 	update();
 
 func update():
-	if storage.data["controller"]:
+	if storage.get_value_or("controller", false):
 		text = "ON";
 	else:
 		text = "OFF";

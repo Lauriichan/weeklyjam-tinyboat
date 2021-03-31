@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://scripts/GameHandler.gd" type="Script" id=1]
 [ext_resource path="res://scripts/menu/ChangeScene.gd" type="Script" id=2]
@@ -22,6 +22,8 @@
 [ext_resource path="res://images/ui/slider-button.png" type="Texture" id=20]
 [ext_resource path="res://images/ui/slider-button_selectedddddd.png" type="Texture" id=21]
 [ext_resource path="res://scripts/menu/main/Exit.gd" type="Script" id=22]
+[ext_resource path="res://styles/Font/Small.tres" type="DynamicFont" id=23]
+[ext_resource path="res://scripts/ui/ValueDisplay.gd" type="Script" id=24]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 0.0
@@ -48,11 +50,12 @@ anchor_bottom = 0.99845
 margin_left = -0.594604
 margin_top = 3.59118
 margin_right = -0.594604
-margin_bottom = 3.59119
+margin_bottom = 3.59125
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+request_music = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -61,18 +64,54 @@ current = true
 scale = Vector2( 2.1, 2.1 )
 texture = ExtResource( 4 )
 
-[node name="Label" type="Label" parent="."]
-margin_left = -337.0
-margin_top = -448.0
-margin_right = 338.0
-margin_bottom = -335.0
+[node name="Title" type="Label" parent="."]
+margin_left = -512.0
+margin_top = -420.0
+margin_right = 512.0
+margin_bottom = -293.0
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 1, 1, 1, 0.607843 )
-text = "Tiny Boat"
+text = "tiny boat"
+align = 1
+autowrap = true
 uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = -501.082
+margin_top = -501.091
+margin_right = -375.082
+margin_bottom = -432.091
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 126.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 23 )
+text = "Highscore"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Highscore" type="Label" parent="VBoxContainer"]
+margin_top = 26.0
+margin_right = 126.0
+margin_bottom = 69.0
+custom_fonts/font = ExtResource( 5 )
+text = "0"
+script = ExtResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+signal_node = "/root/Score"
+signal_name = "highscore_updated"
+value_path = "highscore"
+default_value = "0"
 
 [node name="Main" type="MarginContainer" parent="."]
 margin_left = -192.0
@@ -377,14 +416,17 @@ block_texture = ExtResource( 16 )
 start_block_texture = ExtResource( 17 )
 end_block_texture = ExtResource( 18 )
 offset_block_texture = ExtResource( 19 )
+value = 0.0
 max_value = 20.0
 block_stretch = 1.581
 block_offset_x = 4.72
 block_offset_y = 9.48
 block_row_offset = 4.741
+vertical_row = false
 max_on_start = false
 bar_offset = 9.5
 min_size = Vector2( 0, 64 )
+opacity = 100.0
 slider_texture = ExtResource( 20 )
 slider_texture_highlight = ExtResource( 21 )
 slider_size = 3.0
@@ -412,14 +454,17 @@ block_texture = ExtResource( 16 )
 start_block_texture = ExtResource( 17 )
 end_block_texture = ExtResource( 18 )
 offset_block_texture = ExtResource( 19 )
+value = 0.0
 max_value = 20.0
 block_stretch = 1.581
 block_offset_x = 4.72
 block_offset_y = 9.48
 block_row_offset = 4.741
+vertical_row = false
 max_on_start = false
 bar_offset = 9.5
 min_size = Vector2( 0, 64 )
+opacity = 100.0
 slider_texture = ExtResource( 20 )
 slider_texture_highlight = ExtResource( 21 )
 slider_size = 3.0

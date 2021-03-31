@@ -214,3 +214,21 @@ func draw_row_x():
 func resize():
 	set_size(Vector2(rect_size.x, rect_size.x * ratio));
 	rect_min_size = min_size;
+	
+func get_value() -> float:
+	return value;
+	
+func get_max_value() -> float:
+	return max_value;
+	
+func get_actual_value() -> float:
+	return max_value - value;
+	
+func get_actual_full_value() -> int:
+	return int(get_actual_value());
+	
+func set_actual_value(var _value : float):
+	set_value(max_value - _value);
+
+func set_actual_full_value(var _value : int):
+	set_actual_value(float(_value));

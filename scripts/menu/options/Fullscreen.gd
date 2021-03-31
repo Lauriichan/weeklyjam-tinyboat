@@ -1,23 +1,17 @@
 extends Button
 
 onready var storage : Storage = get_node("/root/Storage");
-var controller : bool = false;
 
 func _ready():
 	var _ignore = connect("pressed", self, "change");
-	if "fullscreen" in storage.data:
-		update();
+	update();
 
 func change():
-	if "fullscreen" in storage.data:
-		storage.data["fullscreen"] = !storage.data["fullscreen"];
-	else:
-		storage.data["fullscreen"] = true;
-	storage.save_to_file();
+	storage.set_value("fullscreen", !storage.get_value_or("fullscreen", false));
 	update();
 
 func update():
-	if storage.data["fullscreen"]:
+	if storage.get_value_or("fullscreen", false):
 		text = "ON";
 		OS.window_fullscreen = true;
 	else:

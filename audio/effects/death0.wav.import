@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Wild Times.wav-2809b856407a01e22901ddac296e7a44.sample"
+path="res://.import/death0.wav-83503eedda96181b015e9648215d267f.sample"
 
 [deps]
 
-source_file="res://audio/music/Wild Times.wav"
-dest_files=[ "res://.import/Wild Times.wav-2809b856407a01e22901ddac296e7a44.sample" ]
+source_file="res://audio/effects/death0.wav"
+dest_files=[ "res://.import/death0.wav-83503eedda96181b015e9648215d267f.sample" ]
 
 [params]
 

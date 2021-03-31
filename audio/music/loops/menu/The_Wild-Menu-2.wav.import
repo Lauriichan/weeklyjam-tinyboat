@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/The_Wild-Menu-2.wav-7d32d27b7a56ce03c4744b1df63cfa66.sample"
+
+[deps]
+
+source_file="res://audio/music/loops/menu/The_Wild-Menu-2.wav"
+dest_files=[ "res://.import/The_Wild-Menu-2.wav-7d32d27b7a56ce03c4744b1df63cfa66.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

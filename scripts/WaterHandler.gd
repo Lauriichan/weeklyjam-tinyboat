@@ -5,6 +5,7 @@ class_name WaterHandler
 export var scroll_speed : int = 2 setget set_scroll_speed;
 
 var player : LocalPlayer;
+var freezed : bool = false;
 
 func set_scroll_speed(var speed : int):
 	var current_speed = abs(speed);
@@ -16,8 +17,14 @@ func set_scroll_speed(var speed : int):
 func _ready():
 	player = get_node("/root/Scene/Player");
 	
+func freeze():
+	freezed = true;
+	
+func unfreeze():
+	freezed = false;
+	
 func _physics_process(_delta):
-	if player == null:
+	if player == null or freezed:
 		return;
 	var rotate = player.rotation_degrees / 180
 	var rotate_y = (abs(player.rotation_degrees) - 90) / 90;

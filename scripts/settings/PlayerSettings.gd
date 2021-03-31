@@ -13,3 +13,8 @@ func _ready():
 	var storage : Storage = get_node("/root/Storage");
 	if "controller" in storage.data:
 		use_controller = storage.data["controller"];
+	var _ignore = storage.connect("value_updated", self, "value_updated");
+
+func value_updated(path, value):
+	if path == "controller":
+		use_controller = value;
