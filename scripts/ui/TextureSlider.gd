@@ -50,7 +50,7 @@ func set_slider_texture_highlight(var texture : Texture):
 	
 func _ready():
 	if storage_path and storage.has_value(storage_path):
-		set_value(max_value - storage.get_value(storage_path));
+		set_actual_value(storage.get_value(storage_path));
 	
 func _draw():
 	if slider_texture != null:

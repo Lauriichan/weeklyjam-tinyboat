@@ -22,26 +22,43 @@ var cannons : Array;
 var freezed = false;
 var active = false;
 
+var location;
+
 func set_sample(var sample):
 	sound = sample;
 	if audio_player != null:
 		audio_player.stream = sound;
 
 func can_take_damage() -> bool:
-	return true;
+	return active;
 	
 func damage(var value : int):
 	health -= value;
 	if health == 0:
 		score_store.add_score(score);
 		audio_player.play_effect();
+		collision_layer = 0;
+		collision_mask = 0;
 		for cannon in cannons:
 			cannon.active = false;
-			cannon.visible = false;
+			cannon.sprite.modulate = Color(0.2, 0.2, 0.6, 0.5);
 		active = false;
-		visible = false;
-		yield(audio_player, "finished");
-		queue_free();
+		sprite.modulate = Color(0.2, 0.2, 0.6, 0.75);
+
+func kill():
+	player = null;
+	score_store = null;
+	for cannon in cannons:
+		cannon.kill();
+		cannon.queue_free();
+	audio_player.queue_free();
+	sprite.queue_free();
+	get_parent().remove_child(self);
+	location.clear_entity();
+	queue_free();
+	
+func set_spawn_location(var _location):
+	location = _location;
 
 func set_type_id(var id : int):
 	type_id = id;
@@ -59,6 +76,7 @@ func _ready():
 	score_store = get_node("/root/Score");
 	audio_player = get_node("AudioPlayer");
 	audio_player.stream = sound;
+	var _ignore = audio_player.connect("finished", self, "kill");
 	layer = collision_layer;
 	collision_layer = 0;
 	collision_mask = 0;

@@ -31,11 +31,15 @@ func unfreeze():
 func has_entity() -> bool:
 	return entity != null;
 
+func clear_entity():
+	entity = null;
+
 func set_entity(var _entity : Boat):
 	entity = _entity;
 	if position.x > 0:
 		entity.position.x = entity.position.x * -1;
 	generate_location();
+	entity.set_spawn_location(self);
 	entity.spawn();
 	entity.collision_layer = 2;
 	entity.collision_mask = 2;

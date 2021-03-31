@@ -33,6 +33,12 @@ func set_sample(var sample):
 	if audio_player != null:
 		audio_player.stream = sound;
 
+func kill():
+	boat = null;
+	player = null;
+	audio_player.queue_free();
+	get_parent().remove_child(self);
+
 func _ready():
 	randomize();
 	tick = new_tick();

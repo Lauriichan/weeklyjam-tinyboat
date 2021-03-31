@@ -51,12 +51,18 @@ func _physics_process(delta):
 			free = true;
 			linear_velocity = Vector2(0, 0);
 			visible = false;
+			collision_layer = 0;
+			collision_mask = 0;
 			audio_player.play_effect();
 			yield(audio_player, "finished");
+			audio_player.queue_free();
 		elif timeToLive <= 0:
 			free = true;
 			score.add_score(1);
+			collision_layer = 0;
+			collision_mask = 0;
 		if free:
+			get_parent().remove_child(self);
 			queue_free();
 
 func can_take_damage() -> bool:

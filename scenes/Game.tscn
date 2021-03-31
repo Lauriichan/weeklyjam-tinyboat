@@ -95,6 +95,8 @@ request_music = 1
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2( 0.333, 0.333 )
+z_index = -3
+z_as_relative = false
 tile_set = SubResource( 1 )
 cell_size = Vector2( 192, 192 )
 format = 1
@@ -111,6 +113,7 @@ max_roll = 0.1
 shake_power = 2.0
 
 [node name="Player" type="RigidBody2D" parent="."]
+z_as_relative = false
 collision_layer = 2
 collision_mask = 2
 mode = 1
@@ -151,47 +154,8 @@ position = Vector2( -0.0496063, -0.0496063 )
 polygon = PoolVector2Array( -18.7908, -2.47382, -18.7908, 2.52464, -8.77658, 2.52286, -6.2381, 2.45406, -3.72878, 3.95523, 3.76034, 3.87171, 6.22466, 2.47615, 8.70955, 2.53341, 18.7152, 2.51586, 18.724, -2.47382, 13.7256, -2.46505, 13.7256, -4.95551, -13.7748, -4.95552, -13.8011, -2.48259 )
 one_way_collision_margin = 0.0
 
-[node name="Enemies" type="Node2D" parent="."]
-script = ExtResource( 7 )
-enemies = [ NodePath("../Templates/BigBoat"), NodePath("../Templates/SmallBoat") ]
-max_amount = [ 2, 3 ]
-spawn_speed = 5
-spawn_tick = 9.0
-
-[node name="Node2D" type="Node2D" parent="Enemies"]
-position = Vector2( -266.286, -320.504 )
-script = ExtResource( 58 )
-radius = 110.0
-speed = 100.0
-
-[node name="Node2D2" type="Node2D" parent="Enemies"]
-position = Vector2( 266.231, -264.62 )
-script = ExtResource( 58 )
-radius = 120.0
-speed = 100.0
-
-[node name="Node2D3" type="Node2D" parent="Enemies"]
-position = Vector2( 287.098, 162.758 )
-script = ExtResource( 58 )
-radius = 100.0
-speed = 100.0
-
-[node name="Node2D4" type="Node2D" parent="Enemies"]
-position = Vector2( -247.535, 345.151 )
-script = ExtResource( 58 )
-radius = 100.0
-speed = 100.0
-
-[node name="Node2D5" type="Node2D" parent="Enemies"]
-position = Vector2( -310.819, 0.706253 )
-script = ExtResource( 58 )
-radius = 110.0
-speed = 100.0
-
-[node name="CannonBalls" type="Node2D" parent="."]
-script = ExtResource( 37 )
-
 [node name="UI" type="Control" parent="."]
+process_priority = 5
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
@@ -298,185 +262,6 @@ signal_name = "highscore_updated"
 value_path = "highscore"
 default_value = "0"
 
-[node name="Settings" type="Node" parent="."]
-
-[node name="Player" type="Node" parent="Settings"]
-script = ExtResource( 2 )
-use_controller = true
-rotation_speed = 2.0
-move_speed = 1.5
-fuel_usage = 0.12
-fuel_regen = 0.03
-
-[node name="Enemy" type="Node" parent="Settings"]
-script = ExtResource( 3 )
-cannon_rotate_speed = 1.8
-
-[node name="Handlers" type="Node" parent="."]
-
-[node name="FuelHandler" type="Node" parent="Handlers"]
-script = ExtResource( 8 )
-critical_block_texture = ExtResource( 23 )
-
-[node name="PauseHandler" type="Node" parent="Handlers"]
-script = ExtResource( 36 )
-
-[node name="Templates" type="Node" parent="."]
-
-[node name="BigBoat" type="KinematicBody2D" parent="Templates"]
-position = Vector2( -647.953, 589.95 )
-collision_layer = 0
-collision_mask = 0
-script = ExtResource( 4 )
-health = 5
-score = 50
-sound = ExtResource( 59 )
-
-[node name="Sprite" type="Sprite" parent="Templates/BigBoat"]
-scale = Vector2( 2.5, 2.5 )
-texture = ExtResource( 15 )
-
-[node name="Collision" type="CollisionPolygon2D" parent="Templates/BigBoat"]
-visible = false
-scale = Vector2( 2.5, 2.5 )
-polygon = PoolVector2Array( 6.51563, 32, 6.50781, 31, 7.49219, 31, 7.5, 29.0078, 8.5, 29.0078, 8.5, 25.9922, 9.49012, 26.0104, 9.50781, 22.9844, 10.5, 23, 10.5, 16, 11.5, 15.9922, 11.5078, 12, 12.4922, 11.9922, 12.5078, 10, 14.5, 10.0078, 14.5, 9, 16.5, 9, 16.5078, 8, 17.5, 7.99219, 17.5078, 4.99219, 18.5078, 5, 18.5, 0, 17.5, 0, 17.5, -3, 16.5, -3, 16.5078, -4, 14.5, -4, 14.5, -5, 12.5, -4.99219, 12.5, -7, 11.5, -7, 11.5078, -9.00781, 14.5, -9.00781, 14.5, -9.98438, 11.5078, -10, 11.5, -12.0078, 13.5, -12.0078, 13.4922, -13, 10.4922, -13, 10.4922, -15, 12.5078, -15.0078, 12.5, -16, 9.49219, -16, 9.5, -18.0078, 8.48438, -18, 8.5, -22.9922, 7.5, -23, 7.50781, -24, 9.49219, -24, 9.5, -27, 6.49219, -27.0078, 6.49219, -28, 5.49219, -28, 5.5, -30, 4.5, -30, 4.5, -31, 2.5, -31.0078, 2.50781, -32.0078, -2.50781, -32, -2.5, -31, -4.5, -30.9922, -4.49219, -30, -5.49219, -29.9922, -5.5, -28.0078, -6.5, -27.9922, -6.50781, -27, -9.50781, -26.9922, -9.5, -23.9922, -7.5, -24, -7.5, -22.9922, -8.5, -22.9922, -8.50781, -18, -9.5, -18, -9.50781, -16, -12.5, -16, -12.5, -14.9922, -10.5078, -14.9922, -10.5, -13, -13.5, -13, -13.5078, -11.9922, -11.5, -11.9922, -11.5078, -9.99219, -14.5, -9.99219, -14.5, -9, -11.5, -8.99219, -11.5, -7, -12.5, -6.99219, -12.5, -5, -14.5, -4.99219, -14.5078, -3.99219, -16.5, -3.99219, -16.5, -3, -17.5, -3, -17.5, 0, -18.5, -0.0078125, -18.5, 5.00781, -17.5, 5, -17.4922, 8.00781, -16.5, 8, -16.5, 9, -14.5, 9, -14.4922, 10.0078, -12.5078, 10, -12.5078, 12.0078, -11.5, 12.0078, -11.5, 15.9922, -10.5, 15.9922, -10.4922, 23, -9.5, 23.0078, -9.5, 26.0078, -8.5, 26.0078, -8.5, 29, -7.50781, 29, -7.5, 31, -6.5, 31.0078, -6.5, 32 )
-
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/BigBoat"]
-position = Vector2( 37.5, 5 )
-stream = ExtResource( 31 )
-script = ExtResource( 32 )
-
-[node name="RightCannon" type="Node2D" parent="Templates/BigBoat"]
-position = Vector2( 37.5, 5 )
-scale = Vector2( 1.5, 1.5 )
-script = ExtResource( 12 )
-shoot = true
-active = false
-max_speed = 420
-min_speed = 190
-sound = ExtResource( 31 )
-shoot_point = -15.5
-ball_speed = 210.0
-
-[node name="Sprite" type="AnimatedSprite" parent="Templates/BigBoat/RightCannon"]
-z_index = 2
-frames = ExtResource( 1 )
-animation = "Animation"
-frame = 3
-speed_scale = 2.0
-playing = true
-centered = false
-offset = Vector2( -3.5, -12.5 )
-
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/BigBoat/RightCannon"]
-scale = Vector2( 0.666667, 0.666667 )
-stream = ExtResource( 31 )
-script = ExtResource( 32 )
-
-[node name="LeftCannon" type="Node2D" parent="Templates/BigBoat"]
-position = Vector2( -37.5, 5 )
-scale = Vector2( 1.5, 1.5 )
-script = ExtResource( 12 )
-shoot = true
-active = false
-max_speed = 420
-min_speed = 190
-sound = ExtResource( 31 )
-shoot_point = -15.5
-ball_speed = 210.0
-
-[node name="Sprite" type="AnimatedSprite" parent="Templates/BigBoat/LeftCannon"]
-z_index = 2
-frames = ExtResource( 1 )
-animation = "Animation"
-frame = 3
-speed_scale = 2.0
-playing = true
-centered = false
-offset = Vector2( -3.5, -12.5 )
-
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/BigBoat/LeftCannon"]
-scale = Vector2( 0.666667, 0.666667 )
-stream = ExtResource( 31 )
-script = ExtResource( 32 )
-
-[node name="SmallBoat" type="KinematicBody2D" parent="Templates"]
-position = Vector2( -591.503, 627.139 )
-collision_layer = 2147483648
-collision_mask = 0
-script = ExtResource( 4 )
-health = 2
-score = 30
-sound = ExtResource( 59 )
-
-[node name="Sprite" type="Sprite" parent="Templates/SmallBoat"]
-scale = Vector2( 2.5, 2.5 )
-texture = ExtResource( 21 )
-
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/SmallBoat"]
-position = Vector2( -18.9493, -32.189 )
-stream = ExtResource( 31 )
-script = ExtResource( 32 )
-
-[node name="Cannon" type="Node2D" parent="Templates/SmallBoat"]
-position = Vector2( 0, -27.5 )
-scale = Vector2( 1.5, 1.5 )
-script = ExtResource( 12 )
-shoot = true
-active = false
-max_speed = 320
-min_speed = 150
-sound = ExtResource( 31 )
-shoot_point = -15.5
-ball_speed = 250.0
-
-[node name="Sprite" type="AnimatedSprite" parent="Templates/SmallBoat/Cannon"]
-z_index = 2
-frames = ExtResource( 1 )
-animation = "Animation"
-frame = 3
-speed_scale = 2.0
-playing = true
-centered = false
-offset = Vector2( -3.5, -12.5 )
-
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/SmallBoat/Cannon"]
-scale = Vector2( 0.666667, 0.666667 )
-stream = ExtResource( 31 )
-script = ExtResource( 32 )
-
-[node name="Collision" type="CollisionPolygon2D" parent="Templates/SmallBoat"]
-visible = false
-polygon = PoolVector2Array( -3.84482, -39.9959, 3.67393, -40.0061, 3.67393, -37.4885, 6.22866, -37.4885, 6.24106, -35.0206, 8.75858, -35.0082, 8.77098, -32.5031, 11.2637, -32.5279, 11.2141, -24.9754, 16.2367, -25.0126, 16.2119, -22.5446, 13.682, -22.5198, 13.7316, -20.0519, 16.2491, -20.0395, 16.2367, -15.0417, 18.7294, -15.0417, 18.7542, -10.0066, 21.2346, -10.0066, 21.2346, 4.93725, 23.7397, 4.92485, 23.7645, 7.46717, 21.2222, 7.50437, 21.2594, 20.0052, 18.8163, 19.9928, 18.7542, 29.9016, 16.3235, 30.0132, 16.2615, 34.9863, 13.7688, 35.0111, 13.7316, 37.479, 8.74618, 37.5162, 8.70897, 39.9965, -8.71523, 39.9841, -8.74004, 37.4542, -13.7007, 37.479, -13.6883, 34.9615, -16.2306, 34.9491, -16.2926, 29.9636, -18.7357, 29.9636, -18.7109, 19.968, -21.216, 19.9431, -21.216, 7.46716, -23.7335, 7.47957, -23.7459, 5.03646, -21.2284, 5.02406, -21.216, -9.96945, -18.7729, -9.96945, -18.7481, -15.0169, -16.2554, -15.0045, -16.2554, -20.0147, -13.7875, -19.9775, -13.7751, -22.5198, -16.2554, -22.5198, -16.2554, -25.0126, -11.2948, -24.9754, -11.208, -32.5155, -8.78964, -32.5279, -8.78964, -34.9958, -6.27212, -35.033, -6.25972, -37.4886, -3.7546, -37.501 )
-
-[node name="CannonBall" type="RigidBody2D" parent="Templates"]
-position = Vector2( -431.042, 661.089 )
-z_index = 1
-mass = 4.32
-physics_material_override = SubResource( 3 )
-gravity_scale = 0.0
-continuous_cd = 2
-contacts_reported = 8
-contact_monitor = true
-sleeping = true
-linear_damp = 0.05
-angular_damp = 0.0
-script = ExtResource( 29 )
-timeToLive = 10.0
-tick = 40
-explosion = ExtResource( 35 )
-
-[node name="Texture" type="Sprite" parent="Templates/CannonBall"]
-scale = Vector2( 2, 2 )
-z_index = 1
-texture = ExtResource( 30 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Templates/CannonBall"]
-polygon = PoolVector2Array( -5, -3, -2.99219, -3, -2.99219, -5.00781, 2.99219, -4.99219, 3.00781, -3.00781, 4.99219, -3, 5.00781, 3, 3, 3.00781, 3, 4.99219, -3, 5, -3, 3, -5, 3 )
-
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/CannonBall"]
-script = ExtResource( 32 )
-
 [node name="Menu" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
@@ -567,15 +352,11 @@ block_stretch = 0.947
 block_offset_x = 2.84
 block_offset_y = 5.679
 block_row_offset = 2.84
-vertical_row = false
-max_on_start = true
 bar_offset = 1.0
 min_size = Vector2( 0, 28 )
-opacity = 100.0
 slider_texture = ExtResource( 52 )
 slider_texture_highlight = ExtResource( 51 )
 slider_size = 3.0
-slider_offset_x = 0.0
 slider_offset_y = -8.5
 _focus_mode = 2
 storage_path = "sfx_volume"
@@ -611,15 +392,11 @@ block_stretch = 0.947
 block_offset_x = 2.84
 block_offset_y = 5.679
 block_row_offset = 2.84
-vertical_row = false
-max_on_start = true
 bar_offset = 1.0
 min_size = Vector2( 0, 28 )
-opacity = 100.0
 slider_texture = ExtResource( 52 )
 slider_texture_highlight = ExtResource( 51 )
 slider_size = 3.0
-slider_offset_x = 0.0
 slider_offset_y = -8.5
 _focus_mode = 2
 storage_path = "music_volume"
@@ -797,7 +574,228 @@ custom_colors/font_color_pressed = Color( 0.329412, 0.329412, 0.329412, 1 )
 text = "No"
 script = ExtResource( 54 )
 
+[node name="Enemies" type="Node2D" parent="."]
+script = ExtResource( 7 )
+enemies = [ NodePath("../Templates/BigBoat"), NodePath("../Templates/SmallBoat") ]
+max_amount = [ 2, 3 ]
+spawn_speed = 5
+spawn_tick = 9.0
+
+[node name="Node2D" type="Node2D" parent="Enemies"]
+position = Vector2( -266.286, -320.504 )
+script = ExtResource( 58 )
+radius = 110.0
+speed = 100.0
+
+[node name="Node2D2" type="Node2D" parent="Enemies"]
+position = Vector2( 266.231, -264.62 )
+script = ExtResource( 58 )
+radius = 120.0
+speed = 100.0
+
+[node name="Node2D3" type="Node2D" parent="Enemies"]
+position = Vector2( 287.098, 162.758 )
+script = ExtResource( 58 )
+radius = 100.0
+speed = 100.0
+
+[node name="Node2D4" type="Node2D" parent="Enemies"]
+position = Vector2( -247.535, 345.151 )
+script = ExtResource( 58 )
+radius = 100.0
+speed = 100.0
+
+[node name="Node2D5" type="Node2D" parent="Enemies"]
+position = Vector2( -310.819, 0.706253 )
+script = ExtResource( 58 )
+radius = 110.0
+speed = 100.0
+
+[node name="CannonBalls" type="Node2D" parent="."]
+script = ExtResource( 37 )
+
+[node name="Settings" type="Node" parent="."]
+
+[node name="Player" type="Node" parent="Settings"]
+script = ExtResource( 2 )
+rotation_speed = 2.0
+move_speed = 1.5
+fuel_usage = 0.12
+fuel_regen = 0.03
+
+[node name="Enemy" type="Node" parent="Settings"]
+script = ExtResource( 3 )
+cannon_rotate_speed = 1.8
+
+[node name="Handlers" type="Node" parent="."]
+
+[node name="FuelHandler" type="Node" parent="Handlers"]
+script = ExtResource( 8 )
+critical_block_texture = ExtResource( 23 )
+
+[node name="PauseHandler" type="Node" parent="Handlers"]
+script = ExtResource( 36 )
+
+[node name="Templates" type="Node" parent="."]
+
+[node name="BigBoat" type="KinematicBody2D" parent="Templates"]
+position = Vector2( -647.953, 589.95 )
+z_index = -2
+z_as_relative = false
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 4 )
+health = 5
+score = 50
+sound = ExtResource( 59 )
+
+[node name="Sprite" type="Sprite" parent="Templates/BigBoat"]
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 15 )
+
+[node name="Collision" type="CollisionPolygon2D" parent="Templates/BigBoat"]
+visible = false
+scale = Vector2( 2.5, 2.5 )
+polygon = PoolVector2Array( 6.51563, 32, 6.50781, 31, 7.49219, 31, 7.5, 29.0078, 8.5, 29.0078, 8.5, 25.9922, 9.49012, 26.0104, 9.50781, 22.9844, 10.5, 23, 10.5, 16, 11.5, 15.9922, 11.5078, 12, 12.4922, 11.9922, 12.5078, 10, 14.5, 10.0078, 14.5, 9, 16.5, 9, 16.5078, 8, 17.5, 7.99219, 17.5078, 4.99219, 18.5078, 5, 18.5, 0, 17.5, 0, 17.5, -3, 16.5, -3, 16.5078, -4, 14.5, -4, 14.5, -5, 12.5, -4.99219, 12.5, -7, 11.5, -7, 11.5078, -9.00781, 14.5, -9.00781, 14.5, -9.98438, 11.5078, -10, 11.5, -12.0078, 13.5, -12.0078, 13.4922, -13, 10.4922, -13, 10.4922, -15, 12.5078, -15.0078, 12.5, -16, 9.49219, -16, 9.5, -18.0078, 8.48438, -18, 8.5, -22.9922, 7.5, -23, 7.50781, -24, 9.49219, -24, 9.5, -27, 6.49219, -27.0078, 6.49219, -28, 5.49219, -28, 5.5, -30, 4.5, -30, 4.5, -31, 2.5, -31.0078, 2.50781, -32.0078, -2.50781, -32, -2.5, -31, -4.5, -30.9922, -4.49219, -30, -5.49219, -29.9922, -5.5, -28.0078, -6.5, -27.9922, -6.50781, -27, -9.50781, -26.9922, -9.5, -23.9922, -7.5, -24, -7.5, -22.9922, -8.5, -22.9922, -8.50781, -18, -9.5, -18, -9.50781, -16, -12.5, -16, -12.5, -14.9922, -10.5078, -14.9922, -10.5, -13, -13.5, -13, -13.5078, -11.9922, -11.5, -11.9922, -11.5078, -9.99219, -14.5, -9.99219, -14.5, -9, -11.5, -8.99219, -11.5, -7, -12.5, -6.99219, -12.5, -5, -14.5, -4.99219, -14.5078, -3.99219, -16.5, -3.99219, -16.5, -3, -17.5, -3, -17.5, 0, -18.5, -0.0078125, -18.5, 5.00781, -17.5, 5, -17.4922, 8.00781, -16.5, 8, -16.5, 9, -14.5, 9, -14.4922, 10.0078, -12.5078, 10, -12.5078, 12.0078, -11.5, 12.0078, -11.5, 15.9922, -10.5, 15.9922, -10.4922, 23, -9.5, 23.0078, -9.5, 26.0078, -8.5, 26.0078, -8.5, 29, -7.50781, 29, -7.5, 31, -6.5, 31.0078, -6.5, 32 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/BigBoat"]
+position = Vector2( 37.5, 5 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
+
+[node name="RightCannon" type="Node2D" parent="Templates/BigBoat"]
+position = Vector2( 37.5, 5 )
+scale = Vector2( 1.5, 1.5 )
+z_as_relative = false
+script = ExtResource( 12 )
+shoot = true
+max_speed = 420
+min_speed = 190
+sound = ExtResource( 31 )
+shoot_point = -15.5
+ball_speed = 210.0
+
+[node name="Sprite" type="AnimatedSprite" parent="Templates/BigBoat/RightCannon"]
+z_index = 2
+frames = ExtResource( 1 )
+animation = "Animation"
+speed_scale = 2.0
+playing = true
+centered = false
+offset = Vector2( -3.5, -12.5 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/BigBoat/RightCannon"]
+scale = Vector2( 0.666667, 0.666667 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
+
+[node name="LeftCannon" type="Node2D" parent="Templates/BigBoat"]
+position = Vector2( -37.5, 5 )
+scale = Vector2( 1.5, 1.5 )
+z_as_relative = false
+script = ExtResource( 12 )
+shoot = true
+max_speed = 420
+min_speed = 190
+sound = ExtResource( 31 )
+shoot_point = -15.5
+ball_speed = 210.0
+
+[node name="Sprite" type="AnimatedSprite" parent="Templates/BigBoat/LeftCannon"]
+z_index = 2
+frames = ExtResource( 1 )
+animation = "Animation"
+speed_scale = 2.0
+playing = true
+centered = false
+offset = Vector2( -3.5, -12.5 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/BigBoat/LeftCannon"]
+scale = Vector2( 0.666667, 0.666667 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
+
+[node name="SmallBoat" type="KinematicBody2D" parent="Templates"]
+position = Vector2( -591.503, 627.139 )
+z_index = -2
+z_as_relative = false
+collision_layer = 2147483648
+collision_mask = 0
+script = ExtResource( 4 )
+health = 2
+score = 30
+sound = ExtResource( 59 )
+
+[node name="Sprite" type="Sprite" parent="Templates/SmallBoat"]
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 21 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/SmallBoat"]
+position = Vector2( -18.9493, -32.189 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
+
+[node name="Cannon" type="Node2D" parent="Templates/SmallBoat"]
+position = Vector2( 0, -27.5 )
+scale = Vector2( 1.5, 1.5 )
+z_as_relative = false
+script = ExtResource( 12 )
+shoot = true
+max_speed = 320
+min_speed = 150
+sound = ExtResource( 31 )
+shoot_point = -15.5
+ball_speed = 250.0
+
+[node name="Sprite" type="AnimatedSprite" parent="Templates/SmallBoat/Cannon"]
+z_index = 2
+frames = ExtResource( 1 )
+animation = "Animation"
+speed_scale = 2.0
+playing = true
+centered = false
+offset = Vector2( -3.5, -12.5 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/SmallBoat/Cannon"]
+scale = Vector2( 0.666667, 0.666667 )
+stream = ExtResource( 31 )
+script = ExtResource( 32 )
+
+[node name="Collision" type="CollisionPolygon2D" parent="Templates/SmallBoat"]
+visible = false
+polygon = PoolVector2Array( -3.84482, -39.9959, 3.67393, -40.0061, 3.67393, -37.4885, 6.22866, -37.4885, 6.24106, -35.0206, 8.75858, -35.0082, 8.77098, -32.5031, 11.2637, -32.5279, 11.2141, -24.9754, 16.2367, -25.0126, 16.2119, -22.5446, 13.682, -22.5198, 13.7316, -20.0519, 16.2491, -20.0395, 16.2367, -15.0417, 18.7294, -15.0417, 18.7542, -10.0066, 21.2346, -10.0066, 21.2346, 4.93725, 23.7397, 4.92485, 23.7645, 7.46717, 21.2222, 7.50437, 21.2594, 20.0052, 18.8163, 19.9928, 18.7542, 29.9016, 16.3235, 30.0132, 16.2615, 34.9863, 13.7688, 35.0111, 13.7316, 37.479, 8.74618, 37.5162, 8.70897, 39.9965, -8.71523, 39.9841, -8.74004, 37.4542, -13.7007, 37.479, -13.6883, 34.9615, -16.2306, 34.9491, -16.2926, 29.9636, -18.7357, 29.9636, -18.7109, 19.968, -21.216, 19.9431, -21.216, 7.46716, -23.7335, 7.47957, -23.7459, 5.03646, -21.2284, 5.02406, -21.216, -9.96945, -18.7729, -9.96945, -18.7481, -15.0169, -16.2554, -15.0045, -16.2554, -20.0147, -13.7875, -19.9775, -13.7751, -22.5198, -16.2554, -22.5198, -16.2554, -25.0126, -11.2948, -24.9754, -11.208, -32.5155, -8.78964, -32.5279, -8.78964, -34.9958, -6.27212, -35.033, -6.25972, -37.4886, -3.7546, -37.501 )
+
+[node name="CannonBall" type="RigidBody2D" parent="Templates"]
+position = Vector2( -431.042, 661.089 )
+z_index = -1
+z_as_relative = false
+mass = 4.32
+physics_material_override = SubResource( 3 )
+gravity_scale = 0.0
+continuous_cd = 2
+contacts_reported = 8
+contact_monitor = true
+sleeping = true
+linear_damp = 0.05
+angular_damp = 0.0
+script = ExtResource( 29 )
+timeToLive = 10.0
+tick = 40
+explosion = ExtResource( 35 )
+
+[node name="Texture" type="Sprite" parent="Templates/CannonBall"]
+scale = Vector2( 2, 2 )
+z_index = 1
+texture = ExtResource( 30 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Templates/CannonBall"]
+polygon = PoolVector2Array( -5, -3, -2.99219, -3, -2.99219, -5.00781, 2.99219, -4.99219, 3.00781, -3.00781, 4.99219, -3, 5.00781, 3, 3, 3.00781, 3, 4.99219, -3, 5, -3, 3, -5, 3 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="Templates/CannonBall"]
+script = ExtResource( 32 )
+
 [node name="BackgroundMesh" type="MeshInstance2D" parent="."]
 z_index = 5
+z_as_relative = false
 mesh = SubResource( 4 )
 texture = ExtResource( 16 )
